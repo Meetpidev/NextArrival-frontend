@@ -1,4 +1,4 @@
-import "dotenv/config";
+
 import type { NextConfig } from "next";
 
 console.log("[Next.js config] Loading configuration. process.env.BACKEND_ORIGIN is:", process.env.BACKEND_ORIGIN);
