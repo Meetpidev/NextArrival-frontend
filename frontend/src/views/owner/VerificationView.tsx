@@ -79,8 +79,13 @@ export default function VerificationView() {
 
       setUploadedDocs([...uploadedDocs, { url: data.url, type: selectedDocType }]);
       setUploadingFile(false);
+<<<<<<< HEAD
     } catch (err: any) {
       setError(err?.response?.data?.error || err?.response?.data?.message || "Server connection failed during file upload");
+=======
+    } catch (err) {
+      setError("Server connection failed during file upload");
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       setUploadingFile(false);
     }
   };
@@ -112,7 +117,11 @@ export default function VerificationView() {
       setCurrentStep(4);
       setSubmitting(false);
     } catch (err: any) {
+<<<<<<< HEAD
       const msg = err?.response?.data?.error || err?.response?.data?.message || "Server connection failed";
+=======
+      const msg = err?.response?.data?.error || "Server connection failed";
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       setError(msg);
       setSubmitting(false);
     }

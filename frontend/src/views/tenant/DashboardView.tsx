@@ -33,7 +33,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import Logo from "@/components/Logo";
 
 const socketServerUrl =
+<<<<<<< HEAD
   process.env.NEXT_PUBLIC_BACKEND_ORIGIN || "https://nextarrival-backend-1.onrender.com";
+=======
+  process.env.NEXT_PUBLIC_BACKEND_ORIGIN || "http://localhost:5000";
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
 
 export default function DashboardView() {
   const router = useRouter();

@@ -4,7 +4,10 @@ import { useState, Suspense } from "react";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+<<<<<<< HEAD
 import { contactApi } from "@/apis/contact";
+=======
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
 import canadaStreet from "../../../public/images/canada-vancouver-seawall.png";
 import {
   HelpCircle,
@@ -81,6 +84,7 @@ const itemVariants: Variants = {
   },
 };
 
+<<<<<<< HEAD
 type FieldErrors = Partial<Record<
   "whoAreYou" | "fullName" | "email" | "destinationCity" | "visaStatus" | "subject" | "message",
   string
@@ -97,12 +101,25 @@ function ContactFormContent() {
     message: "",
   });
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+=======
+function ContactFormContent() {
+  const [formData, setFormData] = useState({
+    identity: "I am an Incoming Tenant",
+    fullName: "",
+    email: "",
+    destinationCity: "",
+    permitStatus: "Approved / Issued",
+    subject: "",
+    message: "",
+  });
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
   const [submitState, setSubmitState] = useState<{
     status: "idle" | "success" | "error";
     message: string;
   }>({ status: "idle", message: "" });
   const [submitting, setSubmitting] = useState(false);
 
+<<<<<<< HEAD
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const namePattern = /^[A-Za-z][A-Za-z\s.'-]*$/;
   const cityPattern = /^[A-Za-z][A-Za-z\s.'-]*$/;
@@ -198,22 +215,40 @@ function ContactFormContent() {
     return nextErrors;
   };
 
+=======
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
     setSubmitState({ status: "idle", message: "" });
 
+<<<<<<< HEAD
     const nextErrors = validate();
     if (Object.keys(nextErrors).length > 0) {
       setFieldErrors(nextErrors);
       setSubmitState({
         status: "error",
         message: "Please fix the highlighted fields and try again.",
+=======
+    const requiredFields = [
+      formData.fullName,
+      formData.email,
+      formData.destinationCity,
+      formData.subject,
+      formData.message,
+    ];
+
+    if (requiredFields.some((field) => !field.trim())) {
+      setSubmitState({
+        status: "error",
+        message: "Please complete all required fields before submitting.",
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       });
       setSubmitting(false);
       return;
     }
 
+<<<<<<< HEAD
     setFieldErrors({});
 
     try {
@@ -226,6 +261,12 @@ function ContactFormContent() {
         subject: formData.subject.trim(),
         messageDetail: formData.message.trim(),
       });
+=======
+    try {
+      console.log("Submitting Support Ticket:", formData);
+
+      await new Promise((resolve) => setTimeout(resolve, 800));
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
 
       setSubmitState({
         status: "success",
@@ -233,11 +274,19 @@ function ContactFormContent() {
       });
 
       setFormData({
+<<<<<<< HEAD
         whoAreYou: "I am an Incoming Tenant",
         fullName: "",
         email: "",
         destinationCity: "",
         visaStatus: "Approved / Issued",
+=======
+        identity: "I am an Incoming Tenant",
+        fullName: "",
+        email: "",
+        destinationCity: "",
+        permitStatus: "Approved / Issued",
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
         subject: "",
         message: "",
       });
@@ -246,6 +295,7 @@ function ContactFormContent() {
         setSubmitState({ status: "idle", message: "" });
       }, 5000);
     } catch (err) {
+<<<<<<< HEAD
       const responseErrors = mapApiErrors(
         (err as { response?: { data?: { details?: Array<{ field?: string; message?: string }> } } })
           ?.response?.data?.details,
@@ -260,6 +310,8 @@ function ContactFormContent() {
         return;
       }
 
+=======
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       setSubmitState({
         status: "error",
         message: "We couldn't send your ticket right now. Please try again in a moment.",
@@ -280,7 +332,11 @@ function ContactFormContent() {
         >
           <motion.div
             variants={itemVariants}
+<<<<<<< HEAD
             className="inline-flex items-center gap-1.5 border border-[#E6DCD0] rounded-full px-4 py-1.5 text-[11px] font-semibold tracking-wider text-[#A38A70] uppercase mb-6 shadow-sm"
+=======
+            className="inline-flex items-center gap-1.5  border border-[#E6DCD0] rounded-full px-4 py-1.5 text-[11px] font-semibold tracking-wider text-[#A38A70] uppercase mb-6 shadow-sm"
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
           >
             <LifeBuoy className="w-3.5 h-3.5" />
             Support Portal
@@ -444,7 +500,11 @@ function ContactFormContent() {
               </h2>
               <p className="text-sm text-[#635A51] leading-relaxed max-w-md font-normal">
                 Our dedicated relocation concierge team monitors inquiries 24/7. Expect a response within
+<<<<<<< HEAD
                 4-6 business hours for high-priority vetting requests.
+=======
+                4–6 business hours for high-priority vetting requests.
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
               </p>
             </div>
 
@@ -456,7 +516,11 @@ function ContactFormContent() {
                 <div>
                   <h4 className="text-sm font-bold text-[#1A1816] mb-0.5">Global Support Hours</h4>
                   <p className="text-xs text-[#635A51] leading-relaxed font-normal">
+<<<<<<< HEAD
                     Mon - Fri: 24h Coverage | Sat - Sun: 8am - 6pm EST
+=======
+                    Mon – Fri: 24h Coverage | Sat – Sun: 8am – 6pm EST
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                   </p>
                 </div>
               </div>
@@ -476,8 +540,13 @@ function ContactFormContent() {
 
             <div className="bg-[#FCFAF7]/40 border border-[#EDE6DC] rounded-2xl p-5 md:p-6 max-w-md mt-4">
               <p className="text-xs md:text-[13px] text-[#635A51] italic leading-relaxed font-normal">
+<<<<<<< HEAD
                 "NestArrival made my move from Seoul to Toronto completely stress-free. The support team
                 walked me through every document requirement."
+=======
+                &quot;NestArrival made my move from Seoul to Toronto completely stress-free. The support team
+                walked me through every document requirement.&quot;
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
               </p>
               <span className="block text-[10px] md:text-[11px] font-bold text-[#A69B8F] tracking-wider uppercase mt-4">
                 - Park J., Senior Architect
@@ -495,12 +564,21 @@ function ContactFormContent() {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="relative">
                 <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">
+<<<<<<< HEAD
                   Who Are You? *
                 </label>
                 <div className="relative">
                   <select
                     value={formData.whoAreYou}
                     onChange={(e) => updateField("whoAreYou", e.target.value)}
+=======
+                  Who Are You?
+                </label>
+                <div className="relative">
+                  <select
+                    value={formData.identity}
+                    onChange={(e) => setFormData({ ...formData, identity: e.target.value })}
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                     className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 pl-4 pr-10 text-xs md:text-sm text-[#2D2924] appearance-none outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
                   >
                     <option>I am an Incoming Tenant</option>
@@ -509,20 +587,28 @@ function ContactFormContent() {
                   </select>
                   <ChevronDown className="w-4 h-4 text-[#A39E98] absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
+<<<<<<< HEAD
                 {fieldErrors.whoAreYou && (
                   <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.whoAreYou}</p>
                 )}
+=======
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">
+<<<<<<< HEAD
                     Your Full Name *
+=======
+                    Your Full Name
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                   </label>
                   <input
                     type="text"
                     placeholder="e.g. John Doe"
                     value={formData.fullName}
+<<<<<<< HEAD
                     onChange={(e) => updateField("fullName", e.target.value)}
                     className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 px-4 text-xs md:text-sm text-[#2D2924] placeholder-[#A39E98] outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
                   />
@@ -533,17 +619,32 @@ function ContactFormContent() {
                 <div>
                   <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">
                     Email Address *
+=======
+                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                    className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 px-4 text-xs md:text-sm text-[#2D2924] placeholder-[#A39E98] outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">
+                    Email Address
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                   </label>
                   <input
                     type="email"
                     placeholder="e.g. john@example.com"
                     value={formData.email}
+<<<<<<< HEAD
                     onChange={(e) => updateField("email", e.target.value)}
                     className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 px-4 text-xs md:text-sm text-[#2D2924] placeholder-[#A39E98] outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
                   />
                   {fieldErrors.email && (
                     <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.email}</p>
                   )}
+=======
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 px-4 text-xs md:text-sm text-[#2D2924] placeholder-[#A39E98] outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
+                  />
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                 </div>
               </div>
 
@@ -556,12 +657,18 @@ function ContactFormContent() {
                     type="text"
                     placeholder="e.g. Toronto, Vancouver"
                     value={formData.destinationCity}
+<<<<<<< HEAD
                     onChange={(e) => updateField("destinationCity", e.target.value)}
                     className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 px-4 text-xs md:text-sm text-[#2D2924] placeholder-[#A39E98] outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
                   />
                   {fieldErrors.destinationCity && (
                     <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.destinationCity}</p>
                   )}
+=======
+                    onChange={(e) => setFormData({ ...formData, destinationCity: e.target.value })}
+                    className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 px-4 text-xs md:text-sm text-[#2D2924] placeholder-[#A39E98] outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
+                  />
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                 </div>
                 <div className="relative">
                   <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">
@@ -569,8 +676,13 @@ function ContactFormContent() {
                   </label>
                   <div className="relative">
                     <select
+<<<<<<< HEAD
                       value={formData.visaStatus}
                       onChange={(e) => updateField("visaStatus", e.target.value)}
+=======
+                      value={formData.permitStatus}
+                      onChange={(e) => setFormData({ ...formData, permitStatus: e.target.value })}
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                       className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 pl-4 pr-10 text-xs md:text-sm text-[#2D2924] appearance-none outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
                     >
                       <option>Approved / Issued</option>
@@ -579,42 +691,65 @@ function ContactFormContent() {
                     </select>
                     <ChevronDown className="w-4 h-4 text-[#A39E98] absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
                   </div>
+<<<<<<< HEAD
                   {fieldErrors.visaStatus && (
                     <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.visaStatus}</p>
                   )}
+=======
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                 </div>
               </div>
 
               <div>
                 <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">
+<<<<<<< HEAD
                     Subject *
+=======
+                  Subject
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                 </label>
                 <input
                   type="text"
                   placeholder="e.g. Document upload verification question"
                   value={formData.subject}
+<<<<<<< HEAD
                   onChange={(e) => updateField("subject", e.target.value)}
                   className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 px-4 text-xs md:text-sm text-[#2D2924] placeholder-[#A39E98] outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
                 />
                 {fieldErrors.subject && (
                   <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.subject}</p>
                 )}
+=======
+                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                  className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 px-4 text-xs md:text-sm text-[#2D2924] placeholder-[#A39E98] outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
+                />
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
               </div>
 
               <div>
                 <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">
+<<<<<<< HEAD
                   Message Detail *
+=======
+                  Message Detail
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                 </label>
                 <textarea
                   rows={4}
                   placeholder="Describe your inquiry here..."
                   value={formData.message}
+<<<<<<< HEAD
                   onChange={(e) => updateField("message", e.target.value)}
                   className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 px-4 text-xs md:text-sm text-[#2D2924] placeholder-[#A39E98] outline-none resize-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
                 />
                 {fieldErrors.message && (
                   <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.message}</p>
                 )}
+=======
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 px-4 text-xs md:text-sm text-[#2D2924] placeholder-[#A39E98] outline-none resize-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
+                />
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
               </div>
 
               {submitState.status !== "idle" && (
@@ -622,16 +757,27 @@ function ContactFormContent() {
                   initial={{ opacity: 0, y: -6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
+<<<<<<< HEAD
                   className={`w-full rounded-xl px-4 py-3 text-xs md:text-sm font-medium border ${
                     submitState.status === "success"
                       ? "bg-emerald-50 border-emerald-200 text-emerald-700"
                       : "bg-red-50 border-red-200 text-red-700"
                   }`}
+=======
+                  className={`w-full rounded-xl px-4 py-3 text-xs md:text-sm font-medium border ${submitState.status === "success"
+                    ? "bg-emerald-50 border-emerald-200 text-emerald-700"
+                    : "bg-red-50 border-red-200 text-red-700"
+                    }`}
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                 >
                   {submitState.message}
                 </motion.div>
               )}
 
+<<<<<<< HEAD
+=======
+              {/* Submit */}
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
               <motion.button
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
@@ -639,7 +785,11 @@ function ContactFormContent() {
                 disabled={submitting}
                 className="w-full bg-[#CFA052] hover:bg-[#221f19] text-white rounded-xl py-3.5 px-4 font-semibold text-xs md:text-sm flex items-center justify-center gap-2 tracking-wide transition-colors duration-200 mt-2 shadow-sm disabled:opacity-70 disabled:cursor-not-allowed"
               >
+<<<<<<< HEAD
                 <span>{submitting ? "Submitting..." : "Submit Support Ticket"}</span>
+=======
+                <span>{submitting ? "Submitting…" : "Submit Support Ticket"}</span>
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                 <Send className="w-3.5 h-3.5 fill-white" />
               </motion.button>
             </form>
@@ -658,7 +808,11 @@ export default function ContactView() {
       <Suspense
         fallback={
           <div className="text-center py-32 text-xs text-[#8a7d6a]">
+<<<<<<< HEAD
             Loading Support Environment...
+=======
+            Loading Support Environment…
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
           </div>
         }
       >
@@ -667,4 +821,8 @@ export default function ContactView() {
       <Footer />
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0

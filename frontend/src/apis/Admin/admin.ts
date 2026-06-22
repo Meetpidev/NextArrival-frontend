@@ -14,6 +14,7 @@ export const adminApi = {
   cmsUpdate: (payload: any) => api.put("/cms", payload),
   subscriptions: () => api.get("/admin/subscriptions"),
   moderateSubscription: (payload: any) => api.post("/admin/subscriptions/moderate", payload),
+<<<<<<< HEAD
   partnerRequests: (params?: { page?: number; limit?: number; status?: string }) =>
     api.get("/admin/partner-requests", { params }),
   updatePartnerRequestStatus: (id: string, status: "PENDING" | "REVIEWED" | "RESOLVED" | "REJECTED") =>
@@ -24,4 +25,6 @@ export const adminApi = {
     api.patch(`/admin/contact-inquiries/${id}/status`, { status }),
   notifications: (params?: { page?: number; limit?: number; isRead?: boolean; type?: string }) =>
     api.get("/admin/notifications", { params }),
+=======
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
 };

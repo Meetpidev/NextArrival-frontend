@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import { prisma } from "@/lib/db";
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { notFound } from "next/navigation";
@@ -17,7 +21,24 @@ interface PolicyPageProps {
 export default async function PolicyPage({ params }: PolicyPageProps) {
   const { id } = await params;
 
+<<<<<<< HEAD
   // Policy content is loaded from fallback text only now that the backend is deployed.
+=======
+  let page: PolicyContent | null = null;
+  try {
+    page = await prisma.cmsPage.findUnique({
+      where: { id },
+      select: {
+        title: true,
+        content: true,
+      },
+    });
+  } catch (error) {
+    console.error("Failed to load policy page:", error);
+  }
+
+  // Fallbacks in case database connection isn't initialized yet
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
   const fallbacks: Record<string, PolicyContent> = {
     terms: {
       title: "Terms & Conditions",

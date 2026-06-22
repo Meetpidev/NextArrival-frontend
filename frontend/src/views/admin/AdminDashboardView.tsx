@@ -21,12 +21,17 @@ export default function AdminDashboardView() {
   const [mounted, setMounted] = useState(false);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [loadingUser, setLoadingUser] = useState(true);
+<<<<<<< HEAD
   const [activeTab, setActiveTab] = useState<"analytics" | "verifications" | "listings" | "refunds" | "cms" | "users" | "subscriptions" | "partnerRequests" | "contactInquiries" | "notifications">("analytics");
+=======
+  const [activeTab, setActiveTab] = useState<"analytics" | "verifications" | "listings" | "refunds" | "cms" | "users" | "subscriptions">("analytics");
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [verificationsShowHistory, setVerificationsShowHistory] = useState(false);
   const [subscriptionsQueue, setSubscriptionsQueue] = useState<any[]>([]);
   const [loadingSubscriptionsQueue, setLoadingSubscriptionsQueue] = useState(false);
   const [subscriptionsShowHistory, setSubscriptionsShowHistory] = useState(false);
+<<<<<<< HEAD
   const [partnerRequests, setPartnerRequests] = useState<any[]>([]);
   const [loadingPartnerRequests, setLoadingPartnerRequests] = useState(false);
   const [partnerRequestsShowHistory, setPartnerRequestsShowHistory] = useState(false);
@@ -35,6 +40,8 @@ export default function AdminDashboardView() {
   const [contactInquiriesShowHistory, setContactInquiriesShowHistory] = useState(false);
   const [notifications, setNotifications] = useState<any[]>([]);
   const [loadingNotifications, setLoadingNotifications] = useState(false);
+=======
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
   const [listingsShowHistory, setListingsShowHistory] = useState(false);
   const [usersData, setUsersData] = useState<{ tenants: any[]; owners: any[] }>({ tenants: [], owners: [] });
   const [loadingUsers, setLoadingUsers] = useState(false);
@@ -73,9 +80,13 @@ export default function AdminDashboardView() {
         console.error("Failed to parse cached user", err);
       }
     }
+<<<<<<< HEAD
     fetchSession();
   }, []);
   useEffect(() => {
+=======
+
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
     (async () => {
       try {
         const { data } = await authApi.me();
@@ -111,6 +122,7 @@ export default function AdminDashboardView() {
     }
   }, [selectedUser]);
 
+<<<<<<< HEAD
   const fetchSession = async () => {
     try {
       const { data } = await authApi.me();
@@ -129,6 +141,8 @@ export default function AdminDashboardView() {
     }
   };
 
+=======
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
   const handleLogout = async () => {
     localStorage.removeItem("nestarrival_user");
     const res = await authApi.logout();
@@ -145,10 +159,14 @@ export default function AdminDashboardView() {
     if (activeTab === "cms") fetchCmsPages();
     if (activeTab === "users") fetchUsers();
     if (activeTab === "subscriptions") fetchSubscriptionsQueue();
+<<<<<<< HEAD
     if (activeTab === "partnerRequests") fetchPartnerRequests();
     if (activeTab === "contactInquiries") fetchContactInquiries();
     if (activeTab === "notifications") fetchNotifications();
   };
+=======
+  }
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
 
   const fetchAnalytics = async () => {
     setLoadingAnalytics(true);
@@ -333,6 +351,7 @@ export default function AdminDashboardView() {
     }
   };
 
+<<<<<<< HEAD
   const fetchPartnerRequests = async () => {
     setLoadingPartnerRequests(true);
     try {
@@ -393,6 +412,8 @@ export default function AdminDashboardView() {
     }
   };
 
+=======
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
   const handleModerateSubscription = async (subscriptionId: string, action: "APPROVE" | "REJECT") => {
     setProcessingAction(subscriptionId);
     try {
@@ -507,9 +528,12 @@ export default function AdminDashboardView() {
             {navItem("verifications", ShieldCheck, "Verification Queue")}
             {navItem("listings", Home, "Listing Moderation")}
             {navItem("subscriptions", DollarSign, "Subscription Queue")}
+<<<<<<< HEAD
             {navItem("partnerRequests", Users, "Partner Requests")}
             {navItem("contactInquiries", FileText, "Contact Inquiries")}
             {navItem("notifications", ShieldCheck, "Notifications")}
+=======
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
             {navItem("refunds", DollarSign, "Refund Claims")}
             {navItem("cms", FileText, "CMS Editor")}
             {navItem("users", Users, "Users Directory")}
@@ -577,9 +601,12 @@ export default function AdminDashboardView() {
                   {navItem("verifications", ShieldCheck, "Verifications")}
                   {navItem("listings", Home, "Moderation")}
                   {navItem("subscriptions", DollarSign, "Subscriptions")}
+<<<<<<< HEAD
                   {navItem("partnerRequests", Users, "Partner Requests")}
                   {navItem("contactInquiries", FileText, "Contact Inquiries")}
                   {navItem("notifications", ShieldCheck, "Notifications")}
+=======
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                   {navItem("refunds", DollarSign, "Refund Claims")}
                   {navItem("cms", FileText, "CMS Editor")}
                   {navItem("users", Users, "Users Directory")}
@@ -1359,6 +1386,7 @@ export default function AdminDashboardView() {
                 </div>
               )}
 
+<<<<<<< HEAD
               {activeTab === "partnerRequests" && (
                 <div className="space-y-6 text-xs text-slate-600">
                   <div className="flex justify-between items-center border-b border-slate-200 pb-3">
@@ -1599,6 +1627,8 @@ export default function AdminDashboardView() {
                 </div>
               )}
 
+=======
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
             </motion.div>
           </AnimatePresence>
 

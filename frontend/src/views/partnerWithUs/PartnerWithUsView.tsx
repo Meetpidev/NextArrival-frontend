@@ -3,13 +3,17 @@
 import { useState, Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+<<<<<<< HEAD
 import { partnerApi } from "@/apis/partner";
+=======
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
 import {
   Handshake,
   Clock,
   Shield,
   ChevronDown,
   Send,
+<<<<<<< HEAD
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -26,6 +30,12 @@ type FieldErrors = Partial<Record<
   string
 >>;
 
+=======
+  Star,
+} from "lucide-react";
+import { motion } from "framer-motion";
+
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
 function PartnerFormContent() {
   const [formData, setFormData] = useState({
     partnerType: "Landlord Association",
@@ -38,7 +48,11 @@ function PartnerFormContent() {
     partnershipGoal: "",
     message: "",
   });
+<<<<<<< HEAD
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+=======
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
   const [submitState, setSubmitState] = useState<{
     status: "idle" | "success" | "error";
     message: string;
@@ -46,6 +60,7 @@ function PartnerFormContent() {
   const [submitting, setSubmitting] = useState(false);
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+<<<<<<< HEAD
   const phonePattern = /^\+\d{7,15}$/;
   const namePattern = /^[A-Za-z][A-Za-z\s.'-]*$/;
   const countryPattern = /^[A-Za-z][A-Za-z\s.'-]*$/;
@@ -58,12 +73,22 @@ function PartnerFormContent() {
         return prev;
       }
 
+=======
+  const phonePattern = /^\+1\s\d{11}$/;
+  const hasNumber = /[0-9]/;
+
+  const updateField = (field: keyof typeof formData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFieldErrors((prev) => {
+      if (!prev[field]) return prev;
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       const next = { ...prev };
       delete next[field];
       return next;
     });
   };
 
+<<<<<<< HEAD
   const validate = () => {
     const nextErrors: FieldErrors = {};
     const organizationName = formData.organizationName.trim();
@@ -166,12 +191,61 @@ function PartnerFormContent() {
     return nextErrors;
   };
 
+=======
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
     setSubmitState({ status: "idle", message: "" });
 
+<<<<<<< HEAD
     const nextErrors = validate();
+=======
+    const nextErrors: Record<string, string> = {};
+
+    if (!formData.organizationName.trim()) {
+      nextErrors.organizationName = "Organization name is required.";
+    }
+
+    if (!formData.contactName.trim()) {
+      nextErrors.contactName = "Your full name is required.";
+    } else if (hasNumber.test(formData.contactName)) {
+      nextErrors.contactName = "Numbers are not allowed in your full name.";
+    }
+
+    if (!formData.email.trim()) {
+      nextErrors.email = "Work email is required.";
+    } else if (!emailPattern.test(formData.email.trim())) {
+      nextErrors.email = "Enter a valid work email address.";
+    }
+
+    if (!formData.phone.trim()) {
+      nextErrors.phone = "Phone number is required.";
+    } else if (!phonePattern.test(formData.phone.trim())) {
+      nextErrors.phone = "Phone number must match +1 67849506774.";
+    }
+
+    if (!formData.country.trim()) {
+      nextErrors.country = "Country is required.";
+    } else if (hasNumber.test(formData.country)) {
+      nextErrors.country = "Numbers are not allowed in country name.";
+    }
+
+    if (!formData.city.trim()) {
+      nextErrors.city = "City is required.";
+    } else if (hasNumber.test(formData.city)) {
+      nextErrors.city = "Numbers are not allowed in city name.";
+    }
+
+    if (!formData.partnershipGoal.trim()) {
+      nextErrors.partnershipGoal = "Please select a partnership goal.";
+    }
+
+    if (formData.message.trim().length < 10) {
+      nextErrors.message = "Tell us more must be at least 10 characters.";
+    }
+
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
     if (Object.keys(nextErrors).length > 0) {
       setFieldErrors(nextErrors);
       setSubmitState({
@@ -185,6 +259,7 @@ function PartnerFormContent() {
     setFieldErrors({});
 
     try {
+<<<<<<< HEAD
       await partnerApi.submitInquiry({
         partnershipType: formData.partnerType,
         organizationName: formData.organizationName.trim(),
@@ -196,6 +271,10 @@ function PartnerFormContent() {
         partnershipGoal: formData.partnershipGoal.trim(),
         tellUsMore: formData.message.trim(),
       });
+=======
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 900));
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
 
       setSubmitState({
         status: "success",
@@ -218,6 +297,7 @@ function PartnerFormContent() {
       setTimeout(() => {
         setSubmitState({ status: "idle", message: "" });
       }, 6000);
+<<<<<<< HEAD
     } catch (err) {
       const responseErrors = mapApiErrors(
         (err as { response?: { data?: { details?: Array<{ field?: string; message?: string }> } } })
@@ -233,6 +313,9 @@ function PartnerFormContent() {
         return;
       }
 
+=======
+    } catch {
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       setSubmitState({
         status: "error",
         message: "We couldn't send your inquiry right now. Please try again.",
@@ -245,6 +328,10 @@ function PartnerFormContent() {
   return (
     <div className="min-h-screen bg-white text-[#2D2924] font-sans px-4 sm:px-6 py-16 md:py-24 flex items-center justify-center">
       <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
+<<<<<<< HEAD
+=======
+        {/* Left Info Column */}
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
         <div className="lg:col-span-5 flex flex-col space-y-8">
           <div>
             <div className="inline-flex items-center gap-2 border border-[#E6DCD0] rounded-full px-5 py-2 text-[11px] font-semibold tracking-wider text-[#A38A70] uppercase mb-6 shadow-sm bg-[#FCFAF7]">
@@ -267,7 +354,11 @@ function PartnerFormContent() {
               <div>
                 <h4 className="text-sm font-bold text-[#1A1816] mb-0.5">Response Time</h4>
                 <p className="text-xs text-[#635A51] leading-relaxed font-normal">
+<<<<<<< HEAD
                   Mon - Fri: Within 24 hours | Weekends: Within 48 hours
+=======
+                  Mon – Fri: Within 24 hours | Weekends: Within 48 hours
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                 </p>
               </div>
             </div>
@@ -287,7 +378,11 @@ function PartnerFormContent() {
 
           <div className="bg-[#FCFAF7]/45 border border-[#EDE6DC] rounded-2xl p-5 md:p-6 max-w-md mt-4">
             <p className="text-xs md:text-[13px] text-[#635A51] italic leading-relaxed font-normal">
+<<<<<<< HEAD
               "Partnering with NestArrival gave our settlement agency a trusted platform to recommend to every international client. Our referrals now arrive with verified housing in place."
+=======
+              &quot;Partnering with NestArrival gave our settlement agency a trusted platform to recommend to every international client. Our referrals now arrive with verified housing in place.&quot;
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
             </p>
             <span className="block text-[10px] md:text-[11px] font-bold text-[#A69B8F] tracking-wider uppercase mt-4">
               - Settlement Agency Partner, Toronto
@@ -295,6 +390,10 @@ function PartnerFormContent() {
           </div>
         </div>
 
+<<<<<<< HEAD
+=======
+        {/* Right Form Column */}
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -302,6 +401,10 @@ function PartnerFormContent() {
           className="lg:col-span-7 bg-white border border-[#EDE6DC] rounded-3xl p-6 md:p-8 shadow-[0_18px_60px_rgba(45,41,36,0.10)] ring-1 ring-black/5"
         >
           <form onSubmit={handleSubmit} className="space-y-5">
+<<<<<<< HEAD
+=======
+            {/* Partnership Type */}
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
             <div className="relative">
               <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">
                 Partnership Type *
@@ -309,7 +412,11 @@ function PartnerFormContent() {
               <div className="relative">
                 <select
                   value={formData.partnerType}
+<<<<<<< HEAD
                   onChange={(e) => updateField("partnerType", e.target.value)}
+=======
+                  onChange={(e) => setFormData({ ...formData, partnerType: e.target.value })}
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                   className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 pl-4 pr-10 text-xs md:text-sm text-[#2D2924] appearance-none outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
                 >
                   <option>Landlord Association</option>
@@ -322,11 +429,17 @@ function PartnerFormContent() {
                 </select>
                 <ChevronDown className="w-4 h-4 text-[#A39E98] absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
               </div>
+<<<<<<< HEAD
               {fieldErrors.partnershipType && (
                 <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.partnershipType}</p>
               )}
             </div>
 
+=======
+            </div>
+
+            {/* Organization & Contact Name */}
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">
@@ -340,7 +453,13 @@ function PartnerFormContent() {
                   className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 px-4 text-xs md:text-sm text-[#2D2924] placeholder-[#A39E98] outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
                 />
                 {fieldErrors.organizationName && (
+<<<<<<< HEAD
                   <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.organizationName}</p>
+=======
+                  <p className="mt-1.5 text-[11px] text-red-600">
+                    {fieldErrors.organizationName}
+                  </p>
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                 )}
               </div>
               <div>
@@ -355,11 +474,21 @@ function PartnerFormContent() {
                   className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 px-4 text-xs md:text-sm text-[#2D2924] placeholder-[#A39E98] outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
                 />
                 {fieldErrors.contactName && (
+<<<<<<< HEAD
                   <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.contactName}</p>
+=======
+                  <p className="mt-1.5 text-[11px] text-red-600">
+                    {fieldErrors.contactName}
+                  </p>
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                 )}
               </div>
             </div>
 
+<<<<<<< HEAD
+=======
+            {/* Email & Phone */}
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">
@@ -373,7 +502,13 @@ function PartnerFormContent() {
                   className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 px-4 text-xs md:text-sm text-[#2D2924] placeholder-[#A39E98] outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
                 />
                 {fieldErrors.email && (
+<<<<<<< HEAD
                   <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.email}</p>
+=======
+                  <p className="mt-1.5 text-[11px] text-red-600">
+                    {fieldErrors.email}
+                  </p>
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                 )}
               </div>
               <div>
@@ -388,11 +523,21 @@ function PartnerFormContent() {
                   className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 px-4 text-xs md:text-sm text-[#2D2924] placeholder-[#A39E98] outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
                 />
                 {fieldErrors.phone && (
+<<<<<<< HEAD
                   <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.phone}</p>
+=======
+                  <p className="mt-1.5 text-[11px] text-red-600">
+                    {fieldErrors.phone}
+                  </p>
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                 )}
               </div>
             </div>
 
+<<<<<<< HEAD
+=======
+            {/* Country & City */}
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">
@@ -406,12 +551,22 @@ function PartnerFormContent() {
                   className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 px-4 text-xs md:text-sm text-[#2D2924] placeholder-[#A39E98] outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
                 />
                 {fieldErrors.country && (
+<<<<<<< HEAD
                   <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.country}</p>
+=======
+                  <p className="mt-1.5 text-[11px] text-red-600">
+                    {fieldErrors.country}
+                  </p>
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                 )}
               </div>
               <div>
                 <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">
+<<<<<<< HEAD
                   City / Region
+=======
+                  City / Region *
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                 </label>
                 <input
                   type="text"
@@ -421,17 +576,33 @@ function PartnerFormContent() {
                   className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 px-4 text-xs md:text-sm text-[#2D2924] placeholder-[#A39E98] outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
                 />
                 {fieldErrors.city && (
+<<<<<<< HEAD
                   <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.city}</p>
+=======
+                  <p className="mt-1.5 text-[11px] text-red-600">
+                    {fieldErrors.city}
+                  </p>
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                 )}
               </div>
             </div>
 
+<<<<<<< HEAD
             <div className="relative">
               <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">
                   Partnership Goal *
                 </label>
               <div className="relative">
                 <select
+=======
+            {/* Partnership Goal */}
+            <div className="relative">
+              <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">
+                Partnership Goal *
+              </label>
+              <div className="relative">
+                  <select
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                   value={formData.partnershipGoal}
                   onChange={(e) => updateField("partnershipGoal", e.target.value)}
                   className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 pl-4 pr-10 text-xs md:text-sm text-[#2D2924] appearance-none outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
@@ -447,10 +618,20 @@ function PartnerFormContent() {
                 <ChevronDown className="w-4 h-4 text-[#A39E98] absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
               </div>
               {fieldErrors.partnershipGoal && (
+<<<<<<< HEAD
                 <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.partnershipGoal}</p>
               )}
             </div>
 
+=======
+                <p className="mt-1.5 text-[11px] text-red-600">
+                  {fieldErrors.partnershipGoal}
+                </p>
+              )}
+            </div>
+
+            {/* Message */}
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
             <div>
               <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">
                 Tell Us More *
@@ -463,7 +644,13 @@ function PartnerFormContent() {
                 className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 px-4 text-xs md:text-sm text-[#2D2924] placeholder-[#A39E98] outline-none resize-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
               />
               {fieldErrors.message && (
+<<<<<<< HEAD
                 <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.message}</p>
+=======
+                <p className="mt-1.5 text-[11px] text-red-600">
+                  {fieldErrors.message}
+                </p>
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
               )}
             </div>
 
@@ -507,7 +694,11 @@ export default function PartnerWithUsView() {
       <Suspense
         fallback={
           <div className="text-center py-32 text-xs text-[#8a7d6a]">
+<<<<<<< HEAD
             Loading Partnership Portal...
+=======
+            Loading Partnership Portal…
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
           </div>
         }
       >

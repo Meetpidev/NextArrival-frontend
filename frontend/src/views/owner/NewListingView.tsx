@@ -68,8 +68,13 @@ export default function NewListingView() {
 
       setPhotos((prev) => [...prev, data.url]);
       setUploadingFile(false);
+<<<<<<< HEAD
     } catch (err: any) {
       setError(err?.response?.data?.error || err?.response?.data?.message || "Server connection failed during image upload.");
+=======
+    } catch (err) {
+      setError("Server connection failed during image upload.");
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       setUploadingFile(false);
     }
   };
@@ -160,7 +165,11 @@ export default function NewListingView() {
         router.push("/owner/dashboard");
       }, 2000);
     } catch (err: any) {
+<<<<<<< HEAD
       const msg = err?.response?.data?.error || err?.response?.data?.message || "Server connection failed.";
+=======
+      const msg = err?.response?.data?.error || "Server connection failed.";
+>>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       setError(msg);
       setSubmitting(false);
     }
