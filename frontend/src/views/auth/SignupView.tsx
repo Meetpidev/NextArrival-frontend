@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-<<<<<<< HEAD
 import {
   Mail,
   Lock,
@@ -18,9 +17,6 @@ import {
   RefreshCw,
   CheckCircle,
 } from "lucide-react";
-=======
-import { Mail, Lock, User, AlertCircle, ArrowRight, ArrowLeft, Eye, EyeOff, KeyRound, RefreshCw, CheckCircle } from "lucide-react";
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
 import Logo from "@/components/Logo";
 import { authApi } from "@/apis/Authentication/auth";
 import { motion, AnimatePresence } from "framer-motion";
@@ -34,14 +30,7 @@ const passwordRules = [
   { label: "One uppercase letter (A–Z)", test: (p: string) => /[A-Z]/.test(p) },
   { label: "One lowercase letter (a–z)", test: (p: string) => /[a-z]/.test(p) },
   { label: "One number (0–9)", test: (p: string) => /\d/.test(p) },
-<<<<<<< HEAD
-  {
-    label: "One special character (!@#$…)",
-    test: (p: string) => /[^a-zA-Z0-9]/.test(p),
-  },
-=======
   { label: "One special character (!@#$…)", test: (p: string) => /[^a-zA-Z0-9]/.test(p) },
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
 ];
 
 export default function SignupView() {
@@ -82,13 +71,7 @@ export default function SignupView() {
       return false;
     }
     if (!nameRegex.test(fullName.trim())) {
-<<<<<<< HEAD
-      setError(
-        "Name can only contain letters, spaces, hyphens, or apostrophes.",
-      );
-=======
       setError("Name can only contain letters, spaces, hyphens, or apostrophes.");
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       return false;
     }
     if (!email.trim()) {
@@ -121,13 +104,7 @@ export default function SignupView() {
     // Password strength check
     const failedRule = passwordRules.find((r) => !r.test(password));
     if (failedRule) {
-<<<<<<< HEAD
-      setError(
-        `Password must meet all requirements: ${failedRule.label.toLowerCase()}.`,
-      );
-=======
       setError(`Password must meet all requirements: ${failedRule.label.toLowerCase()}.`);
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       return;
     }
     if (password !== confirmPassword) {
@@ -137,16 +114,7 @@ export default function SignupView() {
 
     setLoading(true);
     try {
-<<<<<<< HEAD
-      const { data } = await authApi.signup({
-        email,
-        password,
-        fullName,
-        role,
-      });
-=======
       const { data } = await authApi.signup({ email, password, fullName, role });
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       if (!data) {
         setError("Failed to register");
         setLoading(false);
@@ -155,26 +123,9 @@ export default function SignupView() {
       console.log("OTP sent to:", email);
       setStep("OTP");
       setLoading(false);
-<<<<<<< HEAD
-    } catch (err: any) {
-      const errMsg =
-        err?.response?.data?.error ||
-        err?.response?.data?.message ||
-        "Failed to connect to server";
-      setError(errMsg);
-      setLoading(false);
-      if (
-        err?.response?.status === 503 ||
-        errMsg.includes("verification email could not be sent") ||
-        errMsg.includes("Please request a new OTP")
-      ) {
-        setStep("OTP");
-      }
-=======
     } catch {
       setError("Failed to connect to server");
       setLoading(false);
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
     }
   };
 
@@ -182,14 +133,7 @@ export default function SignupView() {
     setError("");
     setLoading(true);
     try {
-<<<<<<< HEAD
-      const { data } = await authApi.google({
-        token: credentialResponse.credential,
-        role,
-      });
-=======
       const { data } = await authApi.google({ credential: credentialResponse.credential, role });
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       if (!data) {
         setError("Google signup failed");
         setLoading(false);
@@ -200,17 +144,8 @@ export default function SignupView() {
       if (userRole === "ADMIN") router.push("/admin/dashboard");
       else if (userRole === "OWNER") router.push("/owner/dashboard");
       else router.push("/tenant/dashboard");
-<<<<<<< HEAD
-    } catch (err: any) {
-      setError(
-        err?.response?.data?.error ||
-          err?.response?.data?.message ||
-          "Failed to authenticate with Google",
-      );
-=======
     } catch {
       setError("Failed to authenticate with Google");
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       setLoading(false);
     }
   };
@@ -231,17 +166,8 @@ export default function SignupView() {
       if (userRole === "ADMIN") router.push("/admin/dashboard");
       else if (userRole === "OWNER") router.push("/owner/dashboard");
       else router.push("/tenant/dashboard");
-<<<<<<< HEAD
-    } catch (err: any) {
-      setError(
-        err?.response?.data?.error ||
-          err?.response?.data?.message ||
-          "Failed to connect to server",
-      );
-=======
     } catch {
       setError("Failed to connect to server");
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       setLoading(false);
     }
   };
@@ -255,17 +181,8 @@ export default function SignupView() {
       console.log("OTP resent to:", email);
       setResendSuccess(true);
       setTimeout(() => setResendSuccess(false), 5000);
-<<<<<<< HEAD
-    } catch (err: any) {
-      setError(
-        err?.response?.data?.error ||
-          err?.response?.data?.message ||
-          "Failed to resend OTP. Please try again.",
-      );
-=======
     } catch {
       setError("Failed to resend OTP. Please try again.");
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
     } finally {
       setResendLoading(false);
     }
@@ -274,78 +191,6 @@ export default function SignupView() {
   const allPasswordRulesPassed = passwordRules.every((r) => r.test(password));
 
   return (
-<<<<<<< HEAD
-    <GoogleOAuthProvider
-      clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}
-    >
-      <div className="flex min-h-[100dvh] flex-col bg-white font-sans overflow-x-hidden lg:flex-row">
-        <div className="hidden lg:flex lg:w-3/5 relative bg-[#fdfbf7] items-center justify-center overflow-hidden">
-          <Image
-            src="/images/authimg.png"
-            alt="Relocation Housing"
-            fill
-            priority
-            sizes="60vw"
-            className="object-cover opacity-25"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#fdfbf7] via-[#fdfbf7]/2   to-transparent pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#fdfbf7]/60 pointer-events-none" />
-          <div className="relative z-10 w-full max-w-2xl px-12 text-[#2c2724]">
-            <Link href="/" className="flex items-center space-x-2 group mb-12">
-              <Logo className="h-12 w-12 text-[#cfa052]" />
-              <span className="text-3xl font-black tracking-tight font-serif text-[#2c2724]">
-                Nest<span className="text-[#cfa052]">Arrival</span>
-              </span>
-            </Link>
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-5xl font-serif font-bold leading-tight mb-6"
-            >
-              Start your <br />
-              <span className="text-[#cfa052] italic">journey abroad</span>
-              <br />
-              with absolute trust.
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-lg font-medium text-[#5c544d] max-w-lg leading-relaxed"
-            >
-              Whether you are an incoming tenant or a verified property owner,
-              join the network that guarantees safety, compliance, and
-              refund-backed confidence.
-            </motion.p>
-          </div>
-        </div>
-        <div className="w-full lg:w-2/5 flex flex-1 flex-col justify-center px-5 sm:px-8 lg:px-16 xl:px-24 py-8 lg:py-12 relative z-20 bg-white shadow-none lg:shadow-[-20px_0_40px_rgba(44,39,36,0.05)] lg:h-[100dvh] lg:overflow-y-auto custom-scrollbar">
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="w-full max-w-md mx-auto my-auto"
-          >
-            <div className="lg:hidden flex items-center justify-center space-x-2 mb-8 mt-2">
-              <Logo className="h-10 w-10 text-[#cfa052]" />
-              <span className="text-2xl font-black font-serif text-[#2c2724]">
-                Nest<span className="text-[#cfa052]">Arrival</span>
-              </span>
-            </div>
-
-            {/* Step Progress Stepper */}
-            <div className="flex items-center gap-2 mb-6">
-              <div
-                className={`h-1.5 rounded-full transition-all duration-300 ${step === "STEP_1" ? "w-8 bg-[#cfa052]" : "w-2 bg-[#eae1d3]"}`}
-              ></div>
-              <div
-                className={`h-1.5 rounded-full transition-all duration-300 ${step === "STEP_2" ? "w-8 bg-[#cfa052]" : "w-2 bg-[#eae1d3]"}`}
-              ></div>
-              <div
-                className={`h-1.5 rounded-full transition-all duration-300 ${step === "OTP" ? "w-8 bg-[#cfa052]" : "w-2 bg-[#eae1d3]"}`}
-              ></div>
-=======
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>
       <div className="flex min-h-[100dvh] flex-col bg-white font-sans overflow-x-hidden lg:flex-row">
         <div className="hidden lg:flex lg:w-3/5 relative bg-[#fdfbf7] items-center justify-center overflow-hidden">
@@ -377,12 +222,10 @@ export default function SignupView() {
               <div className={`h-1.5 rounded-full transition-all duration-300 ${step === "STEP_1" ? "w-8 bg-[#cfa052]" : "w-2 bg-[#eae1d3]"}`}></div>
               <div className={`h-1.5 rounded-full transition-all duration-300 ${step === "STEP_2" ? "w-8 bg-[#cfa052]" : "w-2 bg-[#eae1d3]"}`}></div>
               <div className={`h-1.5 rounded-full transition-all duration-300 ${step === "OTP" ? "w-8 bg-[#cfa052]" : "w-2 bg-[#eae1d3]"}`}></div>
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
             </div>
 
             <div className="mb-8">
               <h2 className="text-3xl font-serif font-bold text-[#2c2724] mb-2">
-<<<<<<< HEAD
                 {step === "OTP"
                   ? "Verify Email"
                   : step === "STEP_2"
@@ -407,109 +250,10 @@ export default function SignupView() {
               <div className="mb-6 rounded-xl bg-green-50 border border-green-100 p-4 text-sm font-semibold text-green-700 flex items-center space-x-3">
                 <CheckCircle className="h-5 w-5 text-green-500 shrink-0" />
                 <span>A new OTP has been sent to your email.</span>
-=======
-                {step === "OTP" ? "Verify Email" : step === "STEP_2" ? "Set Password" : "Create Account"}
-              </h2>
-              <p className="text-sm font-medium text-[#8a7d6a]">
-                {step === "OTP" ? `Enter the OTP sent to ${email}` : step === "STEP_2" ? "Secure your new NestArrival account." : "Join our verified housing network today."}
-              </p>
-            </div>
-            {error && <div className="mb-6 rounded-xl bg-red-50 border border-red-100 p-4 text-sm font-semibold text-red-600 flex items-center space-x-3"><AlertCircle className="h-5 w-5 text-red-500 shrink-0" /><span>{error}</span></div>}
-            {resendSuccess && (
-              <div className="mb-6 rounded-xl bg-green-50 border border-green-100 p-4 text-sm font-semibold text-green-700 flex items-center space-x-3">
-                <CheckCircle className="h-5 w-5 text-green-500 shrink-0" /><span>A new OTP has been sent to your email.</span>
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
               </div>
             )}
             <AnimatePresence mode="wait">
               {step === "STEP_1" && (
-<<<<<<< HEAD
-                <motion.div
-                  key="step-1"
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 10 }}
-                  transition={{ duration: 0.25 }}
-                >
-                  <div className="flex bg-[#f4efe6] p-1 rounded-2xl mb-8">
-                    <button
-                      type="button"
-                      onClick={() => setRole("TENANT")}
-                      className={`flex-1 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer ${role === "TENANT" ? "bg-white text-[#2c2724] shadow-sm" : "text-[#8a7d6a] hover:text-[#2c2724]"}`}
-                    >
-                      Tenant
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setRole("OWNER")}
-                      className={`flex-1 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer ${role === "OWNER" ? "bg-white text-[#2c2724] shadow-sm" : "text-[#8a7d6a] hover:text-[#2c2724]"}`}
-                    >
-                      Owner
-                    </button>
-                  </div>
-                  <div className="mb-6 flex w-full justify-center overflow-hidden">
-                    <GoogleLogin
-                      onSuccess={handleGoogleSuccess}
-                      onError={() => setError("Google signup failed.")}
-                      theme="outline"
-                      size="large"
-                      width={300}
-                      text="signup_with"
-                      shape="pill"
-                    />
-                  </div>
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="h-px bg-[#eae1d3] flex-1"></div>
-                    <span className="text-xs font-bold text-[#a89e8d] uppercase tracking-wider">
-                      Or email
-                    </span>
-                    <div className="h-px bg-[#eae1d3] flex-1"></div>
-                  </div>
-                  <form onSubmit={handleNext} className="space-y-4">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#8a7d6a] mb-1.5">
-                        Full Name
-                      </label>
-                      <div className="relative">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]">
-                          <User className="h-4 w-4" />
-                        </span>
-                        <input
-                          type="text"
-                          required
-                          value={fullName}
-                          onChange={(e) => setFullName(e.target.value)}
-                          placeholder="John Doe"
-                          className="w-full rounded-2xl pl-11 pr-4 py-3 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-sm font-semibold outline-none focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all"
-                        />
-                      </div>
-                      <p className="text-[10px] text-[#aba296] mt-1 ml-1">
-                        Only letters, spaces, hyphens, or apostrophes allowed.
-                      </p>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#8a7d6a] mb-1.5">
-                        Email
-                      </label>
-                      <div className="relative">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]">
-                          <Mail className="h-4 w-4" />
-                        </span>
-                        <input
-                          type="email"
-                          required
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder="name@example.com"
-                          className="w-full rounded-2xl pl-11 pr-4 py-3 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-sm font-semibold outline-none focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all"
-                        />
-                      </div>
-                    </div>
-                    <button
-                      type="submit"
-                      className="w-full bg-[#cfa052] hover:bg-[#b58942] text-white py-3.5 rounded-2xl font-bold text-sm shadow-[0_8px_20px_rgba(207,160,82,0.3)] transition-all flex justify-center items-center gap-2 group mt-6 cursor-pointer"
-                    >
-=======
                 <motion.div key="step-1" initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} transition={{ duration: 0.25 }}>
                   <div className="flex bg-[#f4efe6] p-1 rounded-2xl mb-8">
                     <button type="button" onClick={() => setRole("TENANT")} className={`flex-1 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer ${role === "TENANT" ? "bg-white text-[#2c2724] shadow-sm" : "text-[#8a7d6a] hover:text-[#2c2724]"}`}>Tenant</button>
@@ -532,65 +276,15 @@ export default function SignupView() {
                       </div>
                     </div>
                     <button type="submit" className="w-full bg-[#cfa052] hover:bg-[#b58942] text-white py-3.5 rounded-2xl font-bold text-sm shadow-[0_8px_20px_rgba(207,160,82,0.3)] transition-all flex justify-center items-center gap-2 group mt-6 cursor-pointer">
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                       Next Step
                       <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </button>
                   </form>
-<<<<<<< HEAD
-                  <div className="mt-8 text-center text-sm font-medium text-[#5c544d]">
-                    Already have an account?{" "}
-                    <Link
-                      href="/login"
-                      className="text-[#cfa052] font-bold hover:underline"
-                    >
-                      Sign in
-                    </Link>
-                  </div>
-=======
                   <div className="mt-8 text-center text-sm font-medium text-[#5c544d]">Already have an account? <Link href="/login" className="text-[#cfa052] font-bold hover:underline">Sign in</Link></div>
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                 </motion.div>
               )}
 
               {step === "STEP_2" && (
-<<<<<<< HEAD
-                <motion.div
-                  key="step-2"
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -10 }}
-                  transition={{ duration: 0.25 }}
-                >
-                  <form onSubmit={handleSignup} className="space-y-4">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#8a7d6a] mb-1.5">
-                        Password
-                      </label>
-                      <div className="relative">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]">
-                          <Lock className="h-4 w-4" />
-                        </span>
-                        <input
-                          type={showPassword ? "text" : "password"}
-                          required
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          placeholder="••••••••"
-                          className="w-full rounded-2xl pl-11 pr-12 py-3 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-sm font-semibold outline-none focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="absolute inset-y-0 right-0 flex items-center pr-4 text-[#a89e8d] hover:text-[#2c2724] transition-colors cursor-pointer"
-                        >
-                          {showPassword ? (
-                            <EyeOff className="h-4 w-4" />
-                          ) : (
-                            <Eye className="h-4 w-4" />
-                          )}
-                        </button>
-=======
                 <motion.div key="step-2" initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }} transition={{ duration: 0.25 }}>
                   <form onSubmit={handleSignup} className="space-y-4">
                     <div>
@@ -598,23 +292,12 @@ export default function SignupView() {
                       <div className="relative"><span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]"><Lock className="h-4 w-4" /></span>
                         <input type={showPassword ? "text" : "password"} required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" className="w-full rounded-2xl pl-11 pr-12 py-3 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-sm font-semibold outline-none focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all" />
                         <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 flex items-center pr-4 text-[#a89e8d] hover:text-[#2c2724] transition-colors cursor-pointer">{showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}</button>
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                       </div>
                       {password.length > 0 && (
                         <ul className="mt-3 space-y-1.5 bg-[#fdfbf7] border border-[#eae1d3] rounded-xl p-3">
                           {passwordRules.map((rule) => (
-<<<<<<< HEAD
-                            <li
-                              key={rule.label}
-                              className={`flex items-center gap-2 text-[11px] font-medium transition-colors ${rule.test(password) ? "text-green-600" : "text-[#aba296]"}`}
-                            >
-                              <CheckCircle
-                                className={`h-3.5 w-3.5 shrink-0 ${rule.test(password) ? "text-green-500" : "text-[#d4c9bc]"}`}
-                              />
-=======
                             <li key={rule.label} className={`flex items-center gap-2 text-[11px] font-medium transition-colors ${rule.test(password) ? "text-green-600" : "text-[#aba296]"}`}>
                               <CheckCircle className={`h-3.5 w-3.5 shrink-0 ${rule.test(password) ? "text-green-500" : "text-[#d4c9bc]"}`} />
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                               {rule.label}
                             </li>
                           ))}
@@ -622,74 +305,6 @@ export default function SignupView() {
                       )}
                     </div>
                     <div>
-<<<<<<< HEAD
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#8a7d6a] mb-1.5">
-                        Confirm Password
-                      </label>
-                      <div className="relative">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]">
-                          <Lock className="h-4 w-4" />
-                        </span>
-                        <input
-                          type={showConfirmPassword ? "text" : "password"}
-                          required
-                          value={confirmPassword}
-                          onChange={(e) => setConfirmPassword(e.target.value)}
-                          placeholder="••••••••"
-                          className="w-full rounded-2xl pl-11 pr-12 py-3 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-sm font-semibold outline-none focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all"
-                        />
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setShowConfirmPassword(!showConfirmPassword)
-                          }
-                          className="absolute inset-y-0 right-0 flex items-center pr-4 text-[#a89e8d] hover:text-[#2c2724] transition-colors cursor-pointer"
-                        >
-                          {showConfirmPassword ? (
-                            <EyeOff className="h-4 w-4" />
-                          ) : (
-                            <Eye className="h-4 w-4" />
-                          )}
-                        </button>
-                      </div>
-                      {confirmPassword.length > 0 &&
-                        password !== confirmPassword && (
-                          <p className="text-[11px] text-red-500 font-medium mt-1 ml-1">
-                            Passwords do not match.
-                          </p>
-                        )}
-                    </div>
-                    <div className="flex gap-3 pt-2">
-                      <button
-                        type="button"
-                        onClick={() => setStep("STEP_1")}
-                        className="w-1/3 border border-[#eae1d3] hover:bg-[#fdfbf7] text-[#5c544d] py-3.5 rounded-2xl font-bold text-sm transition-all flex justify-center items-center gap-1.5 cursor-pointer"
-                      >
-                        <ArrowLeft className="h-4 w-4" />
-                        Back
-                      </button>
-                      <button
-                        type="submit"
-                        disabled={loading || !allPasswordRulesPassed}
-                        className="w-2/3 bg-[#cfa052] hover:bg-[#b58942] disabled:opacity-50 disabled:cursor-not-allowed text-white py-3.5 rounded-2xl font-bold text-sm shadow-[0_8px_20px_rgba(207,160,82,0.3)] transition-all flex justify-center items-center gap-2 group cursor-pointer"
-                      >
-                        {loading ? "Creating Account..." : "Create Account"}{" "}
-                        {!loading && (
-                          <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        )}
-                      </button>
-                    </div>
-                  </form>
-                  <div className="mt-8 text-center text-sm font-medium text-[#5c544d]">
-                    Already have an account?{" "}
-                    <Link
-                      href="/login"
-                      className="text-[#cfa052] font-bold hover:underline"
-                    >
-                      Sign in
-                    </Link>
-                  </div>
-=======
                       <label className="block text-xs font-bold uppercase tracking-wider text-[#8a7d6a] mb-1.5">Confirm Password</label>
                       <div className="relative"><span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]"><Lock className="h-4 w-4" /></span>
                         <input type={showConfirmPassword ? "text" : "password"} required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="••••••••" className="w-full rounded-2xl pl-11 pr-12 py-3 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-sm font-semibold outline-none focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all" />
@@ -708,61 +323,10 @@ export default function SignupView() {
                     </div>
                   </form>
                   <div className="mt-8 text-center text-sm font-medium text-[#5c544d]">Already have an account? <Link href="/login" className="text-[#cfa052] font-bold hover:underline">Sign in</Link></div>
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                 </motion.div>
               )}
 
               {step === "OTP" && (
-<<<<<<< HEAD
-                <motion.div
-                  key="otp"
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -10 }}
-                  transition={{ duration: 0.25 }}
-                >
-                  <form onSubmit={handleVerifyOtp} className="space-y-5">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#8a7d6a] mb-2">
-                        6-Digit Code
-                      </label>
-                      <div className="relative">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]">
-                          <KeyRound className="h-4 w-4" />
-                        </span>
-                        <input
-                          type="text"
-                          required
-                          value={otp}
-                          onChange={(e) =>
-                            setOtp(
-                              e.target.value.replace(/\D/g, "").slice(0, 6),
-                            )
-                          }
-                          placeholder="000000"
-                          className="w-full rounded-2xl pl-11 pr-4 py-3.5 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-lg font-bold tracking-[0.5em] outline-none text-center focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all"
-                        />
-                      </div>
-                      <p className="text-[11px] text-[#8a7d6a] mt-2 text-center">
-                        Check your inbox at{" "}
-                        <span className="font-bold text-[#2c2724]">
-                          {email}
-                        </span>
-                      </p>
-                    </div>
-                    <button
-                      type="submit"
-                      disabled={loading || otp.length < 6}
-                      className="w-full bg-[#2c2724] hover:bg-[#1a1715] text-white py-3.5 rounded-2xl font-bold text-sm shadow-lg transition-all flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                    >
-                      {loading ? "Verifying..." : "Verify & Continue"}
-                    </button>
-                    {/* Resend OTP */}
-                    <div className="text-center pt-2">
-                      <p className="text-xs text-[#8a7d6a] mb-2">
-                        Didn&apos;t receive the code?
-                      </p>
-=======
                 <motion.div key="otp" initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }} transition={{ duration: 0.25 }}>
                   <form onSubmit={handleVerifyOtp} className="space-y-5">
                     <div>
@@ -777,20 +341,13 @@ export default function SignupView() {
                     {/* Resend OTP */}
                     <div className="text-center pt-2">
                       <p className="text-xs text-[#8a7d6a] mb-2">Didn&apos;t receive the code?</p>
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                       <button
                         type="button"
                         onClick={handleResendOtp}
                         disabled={resendLoading}
                         className="inline-flex items-center gap-1.5 text-[#cfa052] hover:text-[#b58942] font-bold text-xs transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                       >
-<<<<<<< HEAD
-                        <RefreshCw
-                          className={`h-3.5 w-3.5 ${resendLoading ? "animate-spin" : ""}`}
-                        />
-=======
                         <RefreshCw className={`h-3.5 w-3.5 ${resendLoading ? "animate-spin" : ""}`} />
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                         {resendLoading ? "Sending..." : "Resend OTP"}
                       </button>
                     </div>

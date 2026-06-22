@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-<<<<<<< HEAD
 import {
   Mail,
   Lock,
@@ -17,31 +16,20 @@ import {
   RefreshCw,
   CheckCircle,
 } from "lucide-react";
-=======
-import { Mail, Lock, KeyRound, AlertCircle, ArrowRight, ArrowLeft, Eye, EyeOff, RefreshCw, CheckCircle } from "lucide-react";
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
 import Logo from "@/components/Logo";
 import { authApi } from "@/apis/Authentication/auth";
 import { motion, AnimatePresence } from "framer-motion";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
 const passwordRules = [
   { label: "At least 8 characters", test: (p: string) => p.length >= 8 },
   { label: "One uppercase letter (A–Z)", test: (p: string) => /[A-Z]/.test(p) },
   { label: "One lowercase letter (a–z)", test: (p: string) => /[a-z]/.test(p) },
   { label: "One number (0–9)", test: (p: string) => /\d/.test(p) },
-<<<<<<< HEAD
   {
     label: "One special character (!@#$…)",
     test: (p: string) => /[^a-zA-Z0-9]/.test(p),
   },
-=======
-  { label: "One special character (!@#$…)", test: (p: string) => /[^a-zA-Z0-9]/.test(p) },
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
 ];
 
 export default function LoginView() {
@@ -64,13 +52,7 @@ export default function LoginView() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-<<<<<<< HEAD
-  const [step, setStep] = useState<"LOGIN" | "OTP" | "FORGOT" | "RESET">(
-    "LOGIN",
-  );
-=======
   const [step, setStep] = useState<"LOGIN" | "OTP" | "FORGOT" | "RESET">("LOGIN");
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -106,26 +88,9 @@ export default function LoginView() {
       if (userRole === "ADMIN") router.push("/admin/dashboard");
       else if (userRole === "OWNER") router.push("/owner/dashboard");
       else router.push("/tenant/dashboard");
-<<<<<<< HEAD
-    } catch (err: any) {
-      const errMsg =
-        err?.response?.data?.error ||
-        err?.response?.data?.message ||
-        "Failed to connect to server";
-      setError(errMsg);
-      setLoading(false);
-      if (
-        err?.response?.status === 503 ||
-        errMsg.includes("Verification email could not be sent") ||
-        errMsg.includes("Please try again later")
-      ) {
-        setStep("OTP");
-      }
-=======
     } catch {
       setError("Failed to connect to server");
       setLoading(false);
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
     }
   };
 
@@ -133,14 +98,7 @@ export default function LoginView() {
     setError("");
     setLoading(true);
     try {
-<<<<<<< HEAD
-      const { data } = await authApi.google({
-        token: credentialResponse.credential,
-        role: "TENANT",
-      });
-=======
       const { data } = await authApi.google({ credential: credentialResponse.credential, role: "TENANT" });
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       if (!data) {
         setError("Google login failed");
         setLoading(false);
@@ -152,17 +110,8 @@ export default function LoginView() {
       if (userRole === "ADMIN") router.push("/admin/dashboard");
       else if (userRole === "OWNER") router.push("/owner/dashboard");
       else router.push("/tenant/dashboard");
-<<<<<<< HEAD
-    } catch (err: any) {
-      setError(
-        err?.response?.data?.error ||
-          err?.response?.data?.message ||
-          "Failed to authenticate with Google",
-      );
-=======
     } catch {
       setError("Failed to authenticate with Google");
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       setLoading(false);
     }
   };
@@ -184,17 +133,8 @@ export default function LoginView() {
       if (userRole === "ADMIN") router.push("/admin/dashboard");
       else if (userRole === "OWNER") router.push("/owner/dashboard");
       else router.push("/tenant/dashboard");
-<<<<<<< HEAD
-    } catch (err: any) {
-      setError(
-        err?.response?.data?.error ||
-          err?.response?.data?.message ||
-          "Failed to connect to server",
-      );
-=======
     } catch {
       setError("Failed to connect to server");
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       setLoading(false);
     }
   };
@@ -208,17 +148,8 @@ export default function LoginView() {
       console.log("OTP resent to:", email);
       setResendSuccess(true);
       setTimeout(() => setResendSuccess(false), 5000);
-<<<<<<< HEAD
-    } catch (err: any) {
-      setError(
-        err?.response?.data?.error ||
-          err?.response?.data?.message ||
-          "Failed to resend OTP. Please try again.",
-      );
-=======
     } catch {
       setError("Failed to resend OTP. Please try again.");
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
     } finally {
       setResendLoading(false);
     }
@@ -240,24 +171,8 @@ export default function LoginView() {
       setStep("RESET");
       setLoading(false);
     } catch (err: any) {
-<<<<<<< HEAD
-      const errMsg =
-        err?.response?.data?.error ||
-        err?.response?.data?.message ||
-        "Failed to connect to server";
-      setError(errMsg);
-      setLoading(false);
-      if (
-        err?.response?.status === 503 ||
-        errMsg.includes("Verification email could not be sent") ||
-        errMsg.includes("Please try again later")
-      ) {
-        setStep("RESET");
-      }
-=======
       setError(err?.response?.data?.error || "Failed to connect to server");
       setLoading(false);
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
     }
   };
 
@@ -268,13 +183,7 @@ export default function LoginView() {
 
     const failedRule = passwordRules.find((r) => !r.test(newPassword));
     if (failedRule) {
-<<<<<<< HEAD
-      setError(
-        `Password must meet all requirements: ${failedRule.label.toLowerCase()}.`,
-      );
-=======
       setError(`Password must meet all requirements: ${failedRule.label.toLowerCase()}.`);
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       return;
     }
     if (newPassword !== confirmPassword) {
@@ -290,53 +199,23 @@ export default function LoginView() {
         setLoading(false);
         return;
       }
-<<<<<<< HEAD
-      setSuccessMessage(
-        "Password reset successfully. Please log in with your new password.",
-      );
-=======
       setSuccessMessage("Password reset successfully. Please log in with your new password.");
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       setStep("LOGIN");
       setOtp("");
       setNewPassword("");
       setConfirmPassword("");
       setLoading(false);
     } catch (err: any) {
-<<<<<<< HEAD
-      setError(
-        err?.response?.data?.error ||
-          err?.response?.data?.message ||
-          "Failed to connect to server",
-      );
-=======
       setError(err?.response?.data?.error || "Failed to connect to server");
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
       setLoading(false);
     }
   };
 
   return (
-<<<<<<< HEAD
-    <GoogleOAuthProvider
-      clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}
-    >
-      <div className="flex min-h-[100dvh] flex-col bg-white font-sans overflow-x-hidden lg:flex-row">
-        <div className="hidden lg:flex lg:w-3/5 relative bg-[#fdfbf7] items-center justify-center overflow-hidden">
-          <Image
-            src="/images/authimg.png"
-            alt="Relocation Housing"
-            fill
-            priority
-            sizes="60vw"
-            className="object-cover opacity-25"
-          />
-=======
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>
       <div className="flex min-h-[100dvh] flex-col bg-white font-sans overflow-x-hidden lg:flex-row">
         <div className="hidden lg:flex lg:w-3/5 relative bg-[#fdfbf7] items-center justify-center overflow-hidden">
           <Image src="/images/authimg.png" alt="Relocation Housing" fill priority sizes="60vw" className="object-cover opacity-25" />
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
           <div className="absolute inset-0 bg-gradient-to-r from-[#fdfbf7] via-[#fdfbf7]/2   to-transparent pointer-events-none" />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#fdfbf7]/60 pointer-events-none" />
           <div className="relative z-10 w-full max-w-2xl px-12 text-[#2c2724]">
@@ -346,28 +225,6 @@ export default function LoginView() {
                 Nest<span className="text-[#cfa052]">Arrival</span>
               </span>
             </Link>
-<<<<<<< HEAD
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-5xl font-serif font-bold leading-tight mb-6"
-            >
-              Secure your <br />
-              <span className="text-[#cfa052] italic">journey abroad</span>
-              <br />
-              before you arrive.
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-lg font-medium text-[#5c544d] max-w-lg leading-relaxed"
-            >
-              Join thousands of newcomers who trust our verified, scam-free
-              housing network to find their perfect home with absolute peace of
-              mind.
-=======
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="text-5xl font-serif font-bold leading-tight mb-6">
               Secure your <br />
               <span className="text-[#cfa052] italic">journey abroad</span><br />
@@ -375,20 +232,10 @@ export default function LoginView() {
             </motion.h1>
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="text-lg font-medium text-[#5c544d] max-w-lg leading-relaxed">
               Join thousands of newcomers who trust our verified, scam-free housing network to find their perfect home with absolute peace of mind.
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
             </motion.p>
           </div>
         </div>
 
-<<<<<<< HEAD
-        <div className="w-full lg:w-2/5 flex flex-1 flex-col justify-center px-5 sm:px-8 lg:px-16 xl:px-24 py-8 lg:py-12 relative z-20 bg-white shadow-none lg:shadow-[-20px_0_40px_rgba(44,39,36,0.05)] lg:h-[100dvh] lg:overflow-y-auto">
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="w-full max-w-md mx-auto"
-          >
-=======
         <div className="lg:hidden px-5 pt-6">
           <div className="relative overflow-hidden rounded-[2rem] border border-[#eae1d3] bg-[#fdfbf7] shadow-[0_16px_40px_rgba(44,39,36,0.08)] aspect-[16/11]">
             <Image src="/images/authimg.png" alt="Relocation Housing" fill sizes="100vw" className="object-cover" />
@@ -402,7 +249,6 @@ export default function LoginView() {
 
         <div className="w-full lg:w-2/5 flex flex-1 flex-col justify-center px-5 sm:px-8 lg:px-16 xl:px-24 py-8 lg:py-12 relative z-20 bg-white shadow-none lg:shadow-[-20px_0_40px_rgba(44,39,36,0.05)] lg:h-[100dvh] lg:overflow-y-auto">
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="w-full max-w-md mx-auto">
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
             <div className="lg:hidden flex items-center justify-center space-x-2 mb-8 mt-2">
               <Logo className="h-10 w-10 text-[#cfa052]" />
               <span className="text-2xl font-black font-serif text-[#2c2724]">
@@ -412,24 +258,6 @@ export default function LoginView() {
 
             <div className="mb-8">
               <h2 className="text-3xl font-serif font-bold text-[#2c2724] mb-2">
-<<<<<<< HEAD
-                {step === "LOGIN"
-                  ? "Welcome Back"
-                  : step === "OTP"
-                    ? "Activate Account"
-                    : step === "FORGOT"
-                      ? "Forgot Password"
-                      : "Reset Password"}
-              </h2>
-              <p className="text-sm font-medium text-[#8a7d6a]">
-                {step === "LOGIN"
-                  ? "Please enter your details to sign in."
-                  : step === "OTP"
-                    ? `Enter the OTP sent to ${email}`
-                    : step === "FORGOT"
-                      ? "Enter your email to request a password reset code."
-                      : `Enter the reset code sent to ${email} and set your new password.`}
-=======
                 {step === "LOGIN" 
                   ? "Welcome Back" 
                   : step === "OTP" 
@@ -446,7 +274,6 @@ export default function LoginView() {
                   : step === "FORGOT" 
                   ? "Enter your email to request a password reset code." 
                   : `Enter the reset code sent to ${email} and set your new password.`}
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
               </p>
             </div>
 
@@ -466,41 +293,12 @@ export default function LoginView() {
 
             {resendSuccess && (
               <div className="mb-6 rounded-xl bg-green-50 border border-green-100 p-4 text-sm font-semibold text-green-700 flex items-center space-x-3">
-<<<<<<< HEAD
-                <CheckCircle className="h-5 w-5 text-green-500 shrink-0" />
-                <span>A new OTP has been sent to your email.</span>
-=======
                 <CheckCircle className="h-5 w-5 text-green-500 shrink-0" /><span>A new OTP has been sent to your email.</span>
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
               </div>
             )}
 
             <AnimatePresence mode="wait">
               {step === "LOGIN" && (
-<<<<<<< HEAD
-                <motion.div
-                  key="login"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                >
-                  <div className="mb-6 flex w-full justify-center overflow-hidden">
-                    <GoogleLogin
-                      onSuccess={handleGoogleSuccess}
-                      onError={() => setError("Google login failed.")}
-                      theme="outline"
-                      size="large"
-                      width={300}
-                      text="continue_with"
-                      shape="pill"
-                    />
-                  </div>
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="h-px bg-[#eae1d3] flex-1"></div>
-                    <span className="text-xs font-bold text-[#a89e8d] uppercase tracking-wider">
-                      Or email
-                    </span>
-=======
                 <motion.div key="login" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
                   <div className="mb-6 flex w-full justify-center overflow-hidden">
                     <GoogleLogin onSuccess={handleGoogleSuccess} onError={() => setError("Google login failed.")} theme="outline" size="large" width={300} text="continue_with" shape="pill" />
@@ -508,71 +306,24 @@ export default function LoginView() {
                   <div className="flex items-center gap-4 mb-6">
                     <div className="h-px bg-[#eae1d3] flex-1"></div>
                     <span className="text-xs font-bold text-[#a89e8d] uppercase tracking-wider">Or email</span>
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                     <div className="h-px bg-[#eae1d3] flex-1"></div>
                   </div>
                   <form onSubmit={handleLogin} className="space-y-5">
                     <div>
-<<<<<<< HEAD
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#8a7d6a] mb-2">
-                        Email
-                      </label>
-                      <div className="relative">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]">
-                          <Mail className="h-4 w-4" />
-                        </span>
-                        <input
-                          type="email"
-                          required
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder="name@example.com"
-                          className="w-full rounded-2xl pl-11 pr-4 py-3.5 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-sm font-semibold outline-none focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all placeholder-[#a89e8d]"
-                        />
-=======
                       <label className="block text-xs font-bold uppercase tracking-wider text-[#8a7d6a] mb-2">Email</label>
                       <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]"><Mail className="h-4 w-4" /></span>
                         <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@example.com" className="w-full rounded-2xl pl-11 pr-4 py-3.5 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-sm font-semibold outline-none focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all placeholder-[#a89e8d]" />
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                       </div>
                     </div>
 
                     <div>
-<<<<<<< HEAD
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#8a7d6a] mb-2">
-                        Password
-                      </label>
-                      <div className="relative">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]">
-                          <Lock className="h-4 w-4" />
-                        </span>
-                        <input
-                          type={showPassword ? "text" : "password"}
-                          required
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          placeholder="••••••••"
-                          className="w-full rounded-2xl pl-11 pr-12 py-3.5 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-sm font-semibold outline-none focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="absolute inset-y-0 right-0 flex items-center pr-4 text-[#a89e8d] hover:text-[#2c2724] transition-colors cursor-pointer"
-                        >
-                          {showPassword ? (
-                            <EyeOff className="h-4 w-4" />
-                          ) : (
-                            <Eye className="h-4 w-4" />
-                          )}
-=======
                       <label className="block text-xs font-bold uppercase tracking-wider text-[#8a7d6a] mb-2">Password</label>
                       <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]"><Lock className="h-4 w-4" /></span>
                         <input type={showPassword ? "text" : "password"} required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" className="w-full rounded-2xl pl-11 pr-12 py-3.5 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-sm font-semibold outline-none focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all" />
                         <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 flex items-center pr-4 text-[#a89e8d] hover:text-[#2c2724] transition-colors cursor-pointer">
                           {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                         </button>
                       </div>
                       <div className="flex justify-end mt-2">
@@ -590,34 +341,15 @@ export default function LoginView() {
                       </div>
                     </div>
 
-<<<<<<< HEAD
-                    <button
-                      type="submit"
-                      disabled={loading}
-                      className="w-full bg-[#cfa052] hover:bg-[#b58942] text-white py-3.5 rounded-2xl font-bold text-sm shadow-[0_8px_20px_rgba(207,160,82,0.3)] transition-all flex justify-center items-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                    >
-                      {loading ? "Signing in..." : "Sign In"}
-                      {!loading && (
-                        <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                      )}
-=======
                     <button type="submit" disabled={loading} className="w-full bg-[#cfa052] hover:bg-[#b58942] text-white py-3.5 rounded-2xl font-bold text-sm shadow-[0_8px_20px_rgba(207,160,82,0.3)] transition-all flex justify-center items-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
                       {loading ? "Signing in..." : "Sign In"}
                       {!loading && <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />}
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                     </button>
                   </form>
 
                   <div className="mt-8 text-center text-sm font-medium text-[#5c544d]">
                     Don&apos;t have an account?{" "}
-<<<<<<< HEAD
-                    <Link
-                      href="/signup"
-                      className="text-[#cfa052] font-bold hover:underline"
-                    >
-=======
                     <Link href="/signup" className="text-[#cfa052] font-bold hover:underline">
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                       Sign up
                     </Link>
                   </div>
@@ -625,56 +357,6 @@ export default function LoginView() {
               )}
 
               {step === "OTP" && (
-<<<<<<< HEAD
-                <motion.div
-                  key="otp"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                >
-                  <form onSubmit={handleVerifyOtp} className="space-y-5">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#8a7d6a] mb-2">
-                        6-Digit Code
-                      </label>
-                      <div className="relative">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]">
-                          <KeyRound className="h-4 w-4" />
-                        </span>
-                        <input
-                          type="text"
-                          required
-                          value={otp}
-                          onChange={(e) =>
-                            setOtp(
-                              e.target.value.replace(/\D/g, "").slice(0, 6),
-                            )
-                          }
-                          placeholder="000000"
-                          className="w-full rounded-2xl pl-11 pr-4 py-3.5 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-lg font-bold tracking-[0.5em] outline-none text-center focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all"
-                        />
-                      </div>
-                      <p className="text-[11px] text-[#8a7d6a] mt-2 text-center">
-                        Check your inbox at{" "}
-                        <span className="font-bold text-[#2c2724]">
-                          {email}
-                        </span>
-                      </p>
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={loading || otp.length < 6}
-                      className="w-full bg-[#2c2724] hover:bg-[#1a1715] text-white py-3.5 rounded-2xl font-bold text-sm shadow-lg transition-all flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                    >
-                      {loading ? "Verifying..." : "Verify & Continue"}
-                    </button>
-
-                    <div className="text-center pt-2">
-                      <p className="text-xs text-[#8a7d6a] mb-2">
-                        Didn&apos;t receive the code?
-                      </p>
-=======
                 <motion.div key="otp" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
                   <form onSubmit={handleVerifyOtp} className="space-y-5">
                     <div>
@@ -690,20 +372,13 @@ export default function LoginView() {
 
                     <div className="text-center pt-2">
                       <p className="text-xs text-[#8a7d6a] mb-2">Didn&apos;t receive the code?</p>
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                       <button
                         type="button"
                         onClick={handleResendOtp}
                         disabled={resendLoading}
                         className="inline-flex items-center gap-1.5 text-[#cfa052] hover:text-[#b58942] font-bold text-xs transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                       >
-<<<<<<< HEAD
-                        <RefreshCw
-                          className={`h-3.5 w-3.5 ${resendLoading ? "animate-spin" : ""}`}
-                        />
-=======
                         <RefreshCw className={`h-3.5 w-3.5 ${resendLoading ? "animate-spin" : ""}`} />
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                         {resendLoading ? "Sending..." : "Resend OTP"}
                       </button>
                     </div>
@@ -712,31 +387,6 @@ export default function LoginView() {
               )}
 
               {step === "FORGOT" && (
-<<<<<<< HEAD
-                <motion.div
-                  key="forgot"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                >
-                  <form onSubmit={handleForgotPassword} className="space-y-5">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#8a7d6a] mb-2">
-                        Email Address
-                      </label>
-                      <div className="relative">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]">
-                          <Mail className="h-4 w-4" />
-                        </span>
-                        <input
-                          type="email"
-                          required
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder="name@example.com"
-                          className="w-full rounded-2xl pl-11 pr-4 py-3.5 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-sm font-semibold outline-none focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all placeholder-[#a89e8d]"
-                        />
-=======
                 <motion.div key="forgot" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
                   <form onSubmit={handleForgotPassword} className="space-y-5">
                     <div>
@@ -744,7 +394,6 @@ export default function LoginView() {
                       <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]"><Mail className="h-4 w-4" /></span>
                         <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@example.com" className="w-full rounded-2xl pl-11 pr-4 py-3.5 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-sm font-semibold outline-none focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all placeholder-[#a89e8d]" />
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                       </div>
                     </div>
 
@@ -761,21 +410,9 @@ export default function LoginView() {
                         <ArrowLeft className="h-4 w-4" />
                         Back
                       </button>
-<<<<<<< HEAD
-                      <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-2/3 bg-[#cfa052] hover:bg-[#b58942] text-white py-3.5 rounded-2xl font-bold text-sm shadow-[0_8px_20px_rgba(207,160,82,0.3)] transition-all flex justify-center items-center gap-2 group cursor-pointer"
-                      >
-                        {loading ? "Sending..." : "Send Reset OTP"}
-                        {!loading && (
-                          <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        )}
-=======
                       <button type="submit" disabled={loading} className="w-2/3 bg-[#cfa052] hover:bg-[#b58942] text-white py-3.5 rounded-2xl font-bold text-sm shadow-[0_8px_20px_rgba(207,160,82,0.3)] transition-all flex justify-center items-center gap-2 group cursor-pointer">
                         {loading ? "Sending..." : "Send Reset OTP"}
                         {!loading && <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />}
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                       </button>
                     </div>
                   </form>
@@ -783,35 +420,6 @@ export default function LoginView() {
               )}
 
               {step === "RESET" && (
-<<<<<<< HEAD
-                <motion.div
-                  key="reset"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                >
-                  <form onSubmit={handleResetPassword} className="space-y-4">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#8a7d6a] mb-2">
-                        Reset OTP Code
-                      </label>
-                      <div className="relative">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]">
-                          <KeyRound className="h-4 w-4" />
-                        </span>
-                        <input
-                          type="text"
-                          required
-                          value={otp}
-                          onChange={(e) =>
-                            setOtp(
-                              e.target.value.replace(/\D/g, "").slice(0, 6),
-                            )
-                          }
-                          placeholder="000000"
-                          className="w-full rounded-2xl pl-11 pr-4 py-3 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-base font-bold tracking-[0.5em] outline-none text-center focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all"
-                        />
-=======
                 <motion.div key="reset" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
                   <form onSubmit={handleResetPassword} className="space-y-4">
                     <div>
@@ -819,61 +427,21 @@ export default function LoginView() {
                       <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]"><KeyRound className="h-4 w-4" /></span>
                         <input type="text" required value={otp} onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))} placeholder="000000" className="w-full rounded-2xl pl-11 pr-4 py-3 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-base font-bold tracking-[0.5em] outline-none text-center focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all" />
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                       </div>
                     </div>
 
                     <div>
-<<<<<<< HEAD
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#8a7d6a] mb-1.5">
-                        New Password
-                      </label>
-                      <div className="relative">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]">
-                          <Lock className="h-4 w-4" />
-                        </span>
-                        <input
-                          type={showNewPassword ? "text" : "password"}
-                          required
-                          value={newPassword}
-                          onChange={(e) => setNewPassword(e.target.value)}
-                          placeholder="••••••••"
-                          className="w-full rounded-2xl pl-11 pr-12 py-3 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-sm font-semibold outline-none focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowNewPassword(!showNewPassword)}
-                          className="absolute inset-y-0 right-0 flex items-center pr-4 text-[#a89e8d] hover:text-[#2c2724] transition-colors cursor-pointer"
-                        >
-                          {showNewPassword ? (
-                            <EyeOff className="h-4 w-4" />
-                          ) : (
-                            <Eye className="h-4 w-4" />
-                          )}
-                        </button>
-=======
                       <label className="block text-xs font-bold uppercase tracking-wider text-[#8a7d6a] mb-1.5">New Password</label>
                       <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]"><Lock className="h-4 w-4" /></span>
                         <input type={showNewPassword ? "text" : "password"} required value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder="••••••••" className="w-full rounded-2xl pl-11 pr-12 py-3 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-sm font-semibold outline-none focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all" />
                         <button type="button" onClick={() => setShowNewPassword(!showNewPassword)} className="absolute inset-y-0 right-0 flex items-center pr-4 text-[#a89e8d] hover:text-[#2c2724] transition-colors cursor-pointer">{showNewPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}</button>
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                       </div>
                       {newPassword.length > 0 && (
                         <ul className="mt-3 space-y-1.5 bg-[#fdfbf7] border border-[#eae1d3] rounded-xl p-3">
                           {passwordRules.map((rule) => (
-<<<<<<< HEAD
-                            <li
-                              key={rule.label}
-                              className={`flex items-center gap-2 text-[11px] font-medium transition-colors ${rule.test(newPassword) ? "text-green-600" : "text-[#aba296]"}`}
-                            >
-                              <CheckCircle
-                                className={`h-3.5 w-3.5 shrink-0 ${rule.test(newPassword) ? "text-green-500" : "text-[#d4c9bc]"}`}
-                              />
-=======
                             <li key={rule.label} className={`flex items-center gap-2 text-[11px] font-medium transition-colors ${rule.test(newPassword) ? "text-green-600" : "text-[#aba296]"}`}>
                               <CheckCircle className={`h-3.5 w-3.5 shrink-0 ${rule.test(newPassword) ? "text-green-500" : "text-[#d4c9bc]"}`} />
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                               {rule.label}
                             </li>
                           ))}
@@ -882,43 +450,6 @@ export default function LoginView() {
                     </div>
 
                     <div>
-<<<<<<< HEAD
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#8a7d6a] mb-1.5">
-                        Confirm New Password
-                      </label>
-                      <div className="relative">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]">
-                          <Lock className="h-4 w-4" />
-                        </span>
-                        <input
-                          type={showConfirmPassword ? "text" : "password"}
-                          required
-                          value={confirmPassword}
-                          onChange={(e) => setConfirmPassword(e.target.value)}
-                          placeholder="••••••••"
-                          className="w-full rounded-2xl pl-11 pr-12 py-3 bg-[#fdfbf7] border border-[#eae1d3] text-[#2c2724] text-sm font-semibold outline-none focus:border-[#cfa052] focus:ring-1 focus:ring-[#cfa052] transition-all"
-                        />
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setShowConfirmPassword(!showConfirmPassword)
-                          }
-                          className="absolute inset-y-0 right-0 flex items-center pr-4 text-[#a89e8d] hover:text-[#2c2724] transition-colors cursor-pointer"
-                        >
-                          {showConfirmPassword ? (
-                            <EyeOff className="h-4 w-4" />
-                          ) : (
-                            <Eye className="h-4 w-4" />
-                          )}
-                        </button>
-                      </div>
-                      {confirmPassword.length > 0 &&
-                        newPassword !== confirmPassword && (
-                          <p className="text-[11px] text-red-500 font-medium mt-1 ml-1">
-                            Passwords do not match.
-                          </p>
-                        )}
-=======
                       <label className="block text-xs font-bold uppercase tracking-wider text-[#8a7d6a] mb-1.5">Confirm New Password</label>
                       <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-[#a89e8d]"><Lock className="h-4 w-4" /></span>
@@ -928,7 +459,6 @@ export default function LoginView() {
                       {confirmPassword.length > 0 && newPassword !== confirmPassword && (
                         <p className="text-[11px] text-red-500 font-medium mt-1 ml-1">Passwords do not match.</p>
                       )}
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                     </div>
 
                     <div className="flex gap-3 pt-2">
@@ -944,24 +474,9 @@ export default function LoginView() {
                         <ArrowLeft className="h-4 w-4" />
                         Back
                       </button>
-<<<<<<< HEAD
-                      <button
-                        type="submit"
-                        disabled={
-                          loading ||
-                          !passwordRules.every((r) => r.test(newPassword))
-                        }
-                        className="w-2/3 bg-[#cfa052] hover:bg-[#b58942] disabled:opacity-50 disabled:cursor-not-allowed text-white py-3.5 rounded-2xl font-bold text-sm shadow-[0_8px_20px_rgba(207,160,82,0.3)] transition-all flex justify-center items-center gap-2 group cursor-pointer"
-                      >
-                        {loading ? "Resetting..." : "Reset Password"}
-                        {!loading && (
-                          <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        )}
-=======
                       <button type="submit" disabled={loading || !passwordRules.every((r) => r.test(newPassword))} className="w-2/3 bg-[#cfa052] hover:bg-[#b58942] disabled:opacity-50 disabled:cursor-not-allowed text-white py-3.5 rounded-2xl font-bold text-sm shadow-[0_8px_20px_rgba(207,160,82,0.3)] transition-all flex justify-center items-center gap-2 group cursor-pointer">
                         {loading ? "Resetting..." : "Reset Password"}
                         {!loading && <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />}
->>>>>>> 9bd3f45c49eaeac22bfeeeb188cad76efd6bcde0
                       </button>
                     </div>
                   </form>
