@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 
+
 type FieldErrors = Partial<Record<
   | "partnershipType"
   | "organizationName"
@@ -249,7 +250,14 @@ function PartnerFormContent() {
           <div>
             <div className="inline-flex items-center gap-2 border border-[#E6DCD0] rounded-full px-5 py-2 text-[11px] font-semibold tracking-wider text-[#A38A70] uppercase mb-6 shadow-sm bg-[#FCFAF7]">
               <Handshake className="w-3.5 h-3.5" />
-              Partnership Program
+              Coonected Partners
+            </div>
+            <div>
+              <img
+                src="/images/Alltrip.png"
+                alt="AllTrip Partner Logo"
+                className="w-32 h-auto mb-6"
+              />
             </div>
             <h1 className="text-3xl font-bold tracking-tight text-[#1A1816] mb-4">
               Partner With NestArrival
