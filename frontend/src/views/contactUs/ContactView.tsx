@@ -82,7 +82,7 @@ const itemVariants: Variants = {
 };
 
 type FieldErrors = Partial<Record<
-  "whoAreYou" | "fullName" | "email" | "destinationCity" | "visaStatus" | "subject" | "message",
+  "whoAreYou" | "fullName" | "email" | "phone" | "destinationCity" | "subject" | "message",
   string
 >>;
 
@@ -91,8 +91,8 @@ function ContactFormContent() {
     whoAreYou: "I am an Incoming Tenant",
     fullName: "",
     email: "",
+    phone: "",
     destinationCity: "",
-    visaStatus: "Approved / Issued",
     subject: "",
     message: "",
   });
@@ -104,6 +104,7 @@ function ContactFormContent() {
   const [submitting, setSubmitting] = useState(false);
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phonePattern = /^\+\d{7,15}$/;
   const namePattern = /^[A-Za-z][A-Za-z\s.'-]*$/;
   const cityPattern = /^[A-Za-z][A-Za-z\s.'-]*$/;
 
@@ -124,6 +125,7 @@ function ContactFormContent() {
     const nextErrors: FieldErrors = {};
     const fullName = formData.fullName.trim();
     const email = formData.email.trim();
+    const phone = formData.phone.trim();
     const destinationCity = formData.destinationCity.trim();
     const subject = formData.subject.trim();
     const message = formData.message.trim();
@@ -146,12 +148,14 @@ function ContactFormContent() {
       nextErrors.email = "Enter a valid email address.";
     }
 
-    if (destinationCity && !cityPattern.test(destinationCity)) {
-      nextErrors.destinationCity = "City name should contain letters only.";
+    if (!phone) {
+      nextErrors.phone = "Phone number is required.";
+    } else if (!phonePattern.test(phone)) {
+      nextErrors.phone = "Phone number must be in international format, for example +14165550123.";
     }
 
-    if (!formData.visaStatus.trim()) {
-      nextErrors.visaStatus = "Please choose a visa or permit status.";
+    if (destinationCity && !cityPattern.test(destinationCity)) {
+      nextErrors.destinationCity = "City name should contain letters only.";
     }
 
     if (!subject) {
@@ -185,8 +189,8 @@ function ContactFormContent() {
         detail.field === "whoAreYou" ||
         detail.field === "fullName" ||
         detail.field === "email" ||
+        detail.field === "phone" ||
         detail.field === "destinationCity" ||
-        detail.field === "visaStatus" ||
         detail.field === "subject" ||
         detail.field === "messageDetail"
       ) {
@@ -221,8 +225,8 @@ function ContactFormContent() {
         whoAreYou: formData.whoAreYou,
         fullName: formData.fullName.trim(),
         email: formData.email.trim(),
+        phone: formData.phone.trim(),
         destinationCity: formData.destinationCity.trim() || undefined,
-        visaStatus: formData.visaStatus,
         subject: formData.subject.trim(),
         messageDetail: formData.message.trim(),
       });
@@ -236,8 +240,8 @@ function ContactFormContent() {
         whoAreYou: "I am an Incoming Tenant",
         fullName: "",
         email: "",
+        phone: "",
         destinationCity: "",
-        visaStatus: "Approved / Issued",
         subject: "",
         message: "",
       });
@@ -545,9 +549,22 @@ function ContactFormContent() {
                     <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.email}</p>
                   )}
                 </div>
-              </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">
+                    Phone Number *
+                  </label>
+                  <input
+                    type="tel"
+                    placeholder="e.g. +14165550123"
+                    value={formData.phone}
+                    onChange={(e) => updateField("phone", e.target.value)}
+                    className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 px-4 text-xs md:text-sm text-[#2D2924] placeholder-[#A39E98] outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
+                  />
+                  {fieldErrors.phone && (
+                    <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.phone}</p>
+                  )}
+                </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">
                     Destination City
@@ -563,27 +580,9 @@ function ContactFormContent() {
                     <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.destinationCity}</p>
                   )}
                 </div>
-                <div className="relative">
-                  <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">
-                    Visa / Study Permit Status
-                  </label>
-                  <div className="relative">
-                    <select
-                      value={formData.visaStatus}
-                      onChange={(e) => updateField("visaStatus", e.target.value)}
-                      className="w-full bg-[#FCFAF7] border border-[#EFE9E0] rounded-xl py-3 pl-4 pr-10 text-xs md:text-sm text-[#2D2924] appearance-none outline-none focus:border-[#CFA26B] focus:ring-1 focus:ring-[#CFA26B] transition-all"
-                    >
-                      <option>Approved / Issued</option>
-                      <option>Pending Review</option>
-                      <option>Not Applicable</option>
-                    </select>
-                    <ChevronDown className="w-4 h-4 text-[#A39E98] absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
-                  </div>
-                  {fieldErrors.visaStatus && (
-                    <p className="mt-1.5 text-[11px] text-red-600">{fieldErrors.visaStatus}</p>
-                  )}
-                </div>
               </div>
+
+              
 
               <div>
                 <label className="block text-[11px] font-bold text-[#B39067] uppercase tracking-wide mb-1.5">

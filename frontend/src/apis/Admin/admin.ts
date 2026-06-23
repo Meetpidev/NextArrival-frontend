@@ -16,11 +16,13 @@ export const adminApi = {
   moderateSubscription: (payload: any) => api.post("/admin/subscriptions/moderate", payload),
   partnerRequests: (params?: { page?: number; limit?: number; status?: string }) =>
     api.get("/admin/partner-requests", { params }),
-  updatePartnerRequestStatus: (id: string, status: "PENDING" | "REVIEWED" | "RESOLVED" | "REJECTED") =>
+  acceptedPartners: (params?: { page?: number; limit?: number }) =>
+    api.get("/admin/accepted-partners", { params }),
+  updatePartnerRequestStatus: (id: string, status: "ACCEPTED" | "REJECTED") =>
     api.patch(`/admin/partner-requests/${id}/status`, { status }),
   contactInquiries: (params?: { page?: number; limit?: number; status?: string }) =>
     api.get("/admin/contact-inquiries", { params }),
-  updateContactInquiryStatus: (id: string, status: "PENDING" | "REVIEWED" | "RESOLVED" | "REJECTED") =>
+  updateContactInquiryStatus: (id: string, status: "RESOLVED" | "DELETED") =>
     api.patch(`/admin/contact-inquiries/${id}/status`, { status }),
   notifications: (params?: { page?: number; limit?: number; isRead?: boolean; type?: string }) =>
     api.get("/admin/notifications", { params }),

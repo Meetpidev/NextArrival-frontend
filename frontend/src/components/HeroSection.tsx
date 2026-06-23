@@ -85,7 +85,7 @@ export default function HeroSection({ user: propUser, loading: propLoading }: He
           <div className="lg:w-1/2 space-y-6 relative z-20 text-center lg:text-left mt-2">
             <h1
               ref={headingRef}
-              className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold text-[#2c2724] tracking-tight leading-[1.1] opacity-0"
+              className="font-serif text-2xl sm:text-6xl lg:text-7xl font-bold text-[#2c2724] tracking-tight leading-[1.1] opacity-0"
             >
               Your Trusted <br className="hidden lg:block" />
               Home Platform <br className="hidden lg:block" />
@@ -122,7 +122,7 @@ export default function HeroSection({ user: propUser, loading: propLoading }: He
               <img
                 src="/images/vancouver_townhouse.png"
                 alt="Beautiful Canadian Home"
-                className="relative w-full h-[280px] sm:h-[350px] lg:h-[550px] object-cover rounded-[3rem] shadow-[0_30px_60px_rgba(44,39,36,0.12)] border-[8px] border-white"
+                className="relative w-full h-[280px] sm:h-[350px] lg:h-[520px] lg:translate-x-[-2rem] object-cover rounded-[3rem] shadow-[0_30px_60px_rgba(44,39,36,0.12)] border-[8px] border-white"
               />
               <div className="absolute top-6 left-4 md:-left-6 bg-white p-4 rounded-2xl shadow-xl border border-[#eae1d3] flex items-center gap-3 animate-float-delayed z-20">
                 <div className="h-10 w-10 bg-emerald-50 rounded-full flex items-center justify-center text-emerald-600">

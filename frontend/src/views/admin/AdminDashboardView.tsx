@@ -21,7 +21,7 @@ export default function AdminDashboardView() {
   const [mounted, setMounted] = useState(false);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [loadingUser, setLoadingUser] = useState(true);
-  const [activeTab, setActiveTab] = useState<"analytics" | "verifications" | "listings" | "refunds" | "cms" | "users" | "subscriptions" | "partnerRequests" | "contactInquiries" | "notifications">("analytics");
+  const [activeTab, setActiveTab] = useState<"analytics" | "verifications" | "listings" | "refunds" | "cms" | "users" | "subscriptions" | "partnerRequests" | "acceptedPartners" | "contactInquiries" >("analytics");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [verificationsShowHistory, setVerificationsShowHistory] = useState(false);
   const [subscriptionsQueue, setSubscriptionsQueue] = useState<any[]>([]);
@@ -30,11 +30,12 @@ export default function AdminDashboardView() {
   const [partnerRequests, setPartnerRequests] = useState<any[]>([]);
   const [loadingPartnerRequests, setLoadingPartnerRequests] = useState(false);
   const [partnerRequestsShowHistory, setPartnerRequestsShowHistory] = useState(false);
+  const [acceptedPartners, setAcceptedPartners] = useState<any[]>([]);
+  const [loadingAcceptedPartners, setLoadingAcceptedPartners] = useState(false);
   const [contactInquiries, setContactInquiries] = useState<any[]>([]);
   const [loadingContactInquiries, setLoadingContactInquiries] = useState(false);
   const [contactInquiriesShowHistory, setContactInquiriesShowHistory] = useState(false);
-  const [notifications, setNotifications] = useState<any[]>([]);
-  const [loadingNotifications, setLoadingNotifications] = useState(false);
+  
   const [listingsShowHistory, setListingsShowHistory] = useState(false);
   const [usersData, setUsersData] = useState<{ tenants: any[]; owners: any[] }>({ tenants: [], owners: [] });
   const [loadingUsers, setLoadingUsers] = useState(false);
@@ -146,8 +147,9 @@ export default function AdminDashboardView() {
     if (activeTab === "users") fetchUsers();
     if (activeTab === "subscriptions") fetchSubscriptionsQueue();
     if (activeTab === "partnerRequests") fetchPartnerRequests();
+    if (activeTab === "acceptedPartners") fetchAcceptedPartners();
     if (activeTab === "contactInquiries") fetchContactInquiries();
-    if (activeTab === "notifications") fetchNotifications();
+   
   };
 
   const fetchAnalytics = async () => {
@@ -345,6 +347,18 @@ export default function AdminDashboardView() {
     }
   };
 
+  const fetchAcceptedPartners = async () => {
+    setLoadingAcceptedPartners(true);
+    try {
+      const { data } = await adminApi.acceptedPartners();
+      setAcceptedPartners(Array.isArray(data?.data?.partners) ? data.data.partners : []);
+    } catch (e) {
+      console.error("Accepted partners fetch error:", e);
+    } finally {
+      setLoadingAcceptedPartners(false);
+    }
+  };
+
   const fetchContactInquiries = async () => {
     setLoadingContactInquiries(true);
     try {
@@ -357,7 +371,7 @@ export default function AdminDashboardView() {
     }
   };
 
-  const handleModerateContactInquiry = async (inquiryId: string, status: "REVIEWED" | "RESOLVED" | "REJECTED") => {
+  const handleModerateContactInquiry = async (inquiryId: string, status: "RESOLVED" | "DELETED") => {
     setProcessingAction(inquiryId);
     try {
       await adminApi.updateContactInquiryStatus(inquiryId, status);
@@ -369,19 +383,8 @@ export default function AdminDashboardView() {
     }
   };
 
-  const fetchNotifications = async () => {
-    setLoadingNotifications(true);
-    try {
-      const { data } = await adminApi.notifications();
-      setNotifications(Array.isArray(data?.data?.notifications) ? data.data.notifications : []);
-    } catch (e) {
-      console.error("Notifications fetch error:", e);
-    } finally {
-      setLoadingNotifications(false);
-    }
-  };
-
-  const handleModeratePartnerRequest = async (requestId: string, status: "REVIEWED" | "RESOLVED" | "REJECTED") => {
+  
+  const handleModeratePartnerRequest = async (requestId: string, status: "ACCEPTED" | "REJECTED") => {
     setProcessingAction(requestId);
     try {
       await adminApi.updatePartnerRequestStatus(requestId, status);
@@ -508,8 +511,9 @@ export default function AdminDashboardView() {
             {navItem("listings", Home, "Listing Moderation")}
             {navItem("subscriptions", DollarSign, "Subscription Queue")}
             {navItem("partnerRequests", Users, "Partner Requests")}
+            {navItem("acceptedPartners", Users, "Accepted Partners")}
             {navItem("contactInquiries", FileText, "Contact Inquiries")}
-            {navItem("notifications", ShieldCheck, "Notifications")}
+            
             {navItem("refunds", DollarSign, "Refund Claims")}
             {navItem("cms", FileText, "CMS Editor")}
             {navItem("users", Users, "Users Directory")}
@@ -578,8 +582,9 @@ export default function AdminDashboardView() {
                   {navItem("listings", Home, "Moderation")}
                   {navItem("subscriptions", DollarSign, "Subscriptions")}
                   {navItem("partnerRequests", Users, "Partner Requests")}
+                  {navItem("acceptedPartners", Users, "Accepted Partners")}
                   {navItem("contactInquiries", FileText, "Contact Inquiries")}
-                  {navItem("notifications", ShieldCheck, "Notifications")}
+                 
                   {navItem("refunds", DollarSign, "Refund Claims")}
                   {navItem("cms", FileText, "CMS Editor")}
                   {navItem("users", Users, "Users Directory")}
@@ -1402,11 +1407,11 @@ export default function AdminDashboardView() {
                               </div>
                               <span className={`px-2 py-0.5 rounded-lg font-bold uppercase text-[10px] ${req.status === "PENDING"
                                 ? "bg-amber-50 border border-amber-200 text-amber-700"
-                                : req.status === "REVIEWED"
-                                  ? "bg-blue-50 border border-blue-200 text-blue-700"
-                                  : req.status === "RESOLVED"
-                                    ? "bg-emerald-50 border border-emerald-200 text-emerald-700"
-                                    : "bg-red-50 border border-red-200 text-red-600"
+                                : req.status === "ACCEPTED"
+                                  ? "bg-emerald-50 border border-emerald-200 text-emerald-700"
+                                  : req.status === "REJECTED"
+                                    ? "bg-red-50 border border-red-200 text-red-600"
+                                    : "bg-slate-50 border border-slate-200 text-slate-600"
                                 }`}>
                                 {req.status}
                               </span>
@@ -1439,25 +1444,56 @@ export default function AdminDashboardView() {
                                   <span>Reject</span>
                                 </button>
                                 <button
-                                  onClick={() => handleModeratePartnerRequest(req.id, "REVIEWED")}
-                                  disabled={processingAction === req.id}
-                                  className="rounded-lg bg-[#cfa052] text-white px-4 py-2 font-bold hover:bg-[#b8903f] transition-colors flex items-center gap-1 cursor-pointer"
-                                >
-                                  <Check className="h-3.5 w-3.5" />
-                                  <span>Mark Reviewed</span>
-                                </button>
-                                <button
-                                  onClick={() => handleModeratePartnerRequest(req.id, "RESOLVED")}
+                                  onClick={() => handleModeratePartnerRequest(req.id, "ACCEPTED")}
                                   disabled={processingAction === req.id}
                                   className="rounded-lg bg-emerald-600 text-white px-4 py-2 font-bold hover:bg-emerald-700 transition-colors flex items-center gap-1 cursor-pointer"
                                 >
                                   <Check className="h-3.5 w-3.5" />
-                                  <span>Resolve</span>
+                                  <span>Accept</span>
                                 </button>
                               </div>
                             )}
                           </div>
                         ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {activeTab === "acceptedPartners" && (
+                <div className="space-y-6 text-xs text-slate-600">
+                  <div className="flex justify-between items-center border-b border-slate-200 pb-3">
+                    <h2 className="text-base font-bold text-slate-900">Accepted Partners</h2>
+                  </div>
+
+                  {loadingAcceptedPartners ? (
+                    <div className="flex justify-center py-16"><Loader2 className="h-8 w-8 animate-spin text-[#cfa052]" /></div>
+                  ) : acceptedPartners.length === 0 ? (
+                    <div className="text-center py-16 bg-white border border-slate-200 rounded-xl italic text-slate-400">
+                      No accepted partners found.
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {acceptedPartners.map((partner) => (
+                        <div key={partner.id} className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                          <div className="flex items-center justify-between gap-3 mb-3">
+                            <div>
+                              <p className="font-bold text-slate-900 text-sm">{partner.organizationName}</p>
+                              <p className="text-slate-400 text-[11px]">{partner.fullName}</p>
+                            </div>
+                            <span className="px-2 py-0.5 rounded-lg font-bold uppercase text-[10px] bg-emerald-50 border border-emerald-200 text-emerald-700">
+                              ACCEPTED
+                            </span>
+                          </div>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[11px] text-slate-600">
+                            <p><strong className="text-slate-400 uppercase text-[9px] tracking-wider">Email:</strong> {partner.email}</p>
+                            <p><strong className="text-slate-400 uppercase text-[9px] tracking-wider">Phone:</strong> {partner.phone || "—"}</p>
+                            <p><strong className="text-slate-400 uppercase text-[9px] tracking-wider">Country:</strong> {partner.country}</p>
+                            <p><strong className="text-slate-400 uppercase text-[9px] tracking-wider">City:</strong> {partner.cityRegion || "—"}</p>
+                            <p className="sm:col-span-2"><strong className="text-slate-400 uppercase text-[9px] tracking-wider">Goal:</strong> {partner.partnershipGoal}</p>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   )}
                 </div>
@@ -1506,10 +1542,10 @@ export default function AdminDashboardView() {
                               </div>
                               <span className={`px-2 py-0.5 rounded-lg font-bold uppercase text-[10px] ${req.status === "PENDING"
                                 ? "bg-amber-50 border border-amber-200 text-amber-700"
-                                : req.status === "REVIEWED"
-                                  ? "bg-blue-50 border border-blue-200 text-blue-700"
-                                  : req.status === "RESOLVED"
-                                    ? "bg-emerald-50 border border-emerald-200 text-emerald-700"
+                                : req.status === "RESOLVED"
+                                  ? "bg-emerald-50 border border-emerald-200 text-emerald-700"
+                                  : req.status === "DELETED"
+                                    ? "bg-slate-50 border border-slate-200 text-slate-600"
                                     : "bg-red-50 border border-red-200 text-red-600"
                                 }`}>
                                 {req.status}
@@ -1534,20 +1570,12 @@ export default function AdminDashboardView() {
                             {req.status === "PENDING" && (
                               <div className="flex gap-2 justify-end">
                                 <button
-                                  onClick={() => handleModerateContactInquiry(req.id, "REJECTED")}
+                                  onClick={() => handleModerateContactInquiry(req.id, "DELETED")}
                                   disabled={processingAction === req.id}
                                   className="rounded-lg border border-red-200 bg-red-50 text-red-600 px-4 py-2 font-bold hover:bg-red-100 transition-colors flex items-center gap-1 cursor-pointer"
                                 >
                                   <X className="h-3.5 w-3.5" />
-                                  <span>Reject</span>
-                                </button>
-                                <button
-                                  onClick={() => handleModerateContactInquiry(req.id, "REVIEWED")}
-                                  disabled={processingAction === req.id}
-                                  className="rounded-lg bg-[#cfa052] text-white px-4 py-2 font-bold hover:bg-[#b8903f] transition-colors flex items-center gap-1 cursor-pointer"
-                                >
-                                  <Check className="h-3.5 w-3.5" />
-                                  <span>Mark Reviewed</span>
+                                  <span>Delete</span>
                                 </button>
                                 <button
                                   onClick={() => handleModerateContactInquiry(req.id, "RESOLVED")}
@@ -1566,39 +1594,7 @@ export default function AdminDashboardView() {
                 </div>
               )}
 
-              {activeTab === "notifications" && (
-                <div className="space-y-6 text-xs text-slate-600">
-                  <div className="flex justify-between items-center border-b border-slate-200 pb-3">
-                    <h2 className="text-base font-bold text-slate-900">Admin Notifications</h2>
-                  </div>
-
-                  {loadingNotifications ? (
-                    <div className="flex justify-center py-16"><Loader2 className="h-8 w-8 animate-spin text-[#cfa052]" /></div>
-                  ) : notifications.length === 0 ? (
-                    <div className="text-center py-16 bg-white border border-slate-200 rounded-xl italic text-slate-400">
-                      No notifications found.
-                    </div>
-                  ) : (
-                    <div className="space-y-4">
-                      {notifications.map((item) => (
-                        <div key={item.id} className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-                          <div className="flex items-center justify-between gap-3 mb-2">
-                            <p className="font-bold text-slate-900 text-sm">{item.title}</p>
-                            <span className="text-[10px] font-bold uppercase text-slate-400">{item.type}</span>
-                          </div>
-                          <p className="text-slate-600 text-[11px] leading-relaxed">{item.message}</p>
-                          <div className="mt-3 flex flex-wrap gap-3 text-[10px] text-slate-400">
-                            <span>{new Date(item.createdAt).toLocaleString()}</span>
-                            {item.relatedType && <span>Related: {item.relatedType}</span>}
-                            {item.isRead !== undefined && <span>{item.isRead ? "Read" : "Unread"}</span>}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-
+             
             </motion.div>
           </AnimatePresence>
 
