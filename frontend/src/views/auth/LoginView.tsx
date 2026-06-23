@@ -236,7 +236,7 @@ export default function LoginView() {
           </div>
         </div>
 
-        <div className="lg:hidden px-5 pt-6">
+        <div className="hidden lg:hidden px-5 pt-6">
           <div className="relative overflow-hidden rounded-[2rem] border border-[#eae1d3] bg-[#fdfbf7] shadow-[0_16px_40px_rgba(44,39,36,0.08)] aspect-[16/11]">
             <Image src="/images/authimg.png" alt="Relocation Housing" fill sizes="100vw" className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#2c2724]/35 via-transparent to-transparent" />
