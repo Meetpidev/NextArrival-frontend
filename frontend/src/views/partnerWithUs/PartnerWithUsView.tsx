@@ -250,7 +250,7 @@ function PartnerFormContent() {
           <div>
             <div className="inline-flex items-center gap-2 border border-[#E6DCD0] rounded-full px-5 py-2 text-[11px] font-semibold tracking-wider text-[#A38A70] uppercase mb-6 shadow-sm bg-[#FCFAF7]">
               <Handshake className="w-3.5 h-3.5" />
-              Coonected Partners
+              Connected Partners
             </div>
             <div>
               <img
