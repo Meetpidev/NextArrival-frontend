@@ -12,6 +12,7 @@ import TrendingHomesSection from "@/components/TrendingHomesSection";
 import FoundersMessageSection from "@/components/FoundersMessageSection";
 import PartnersSection from "@/components/PartnersSection";
 import EarlyAccessSection from "@/components/EarlyAccessSection";
+import SupportSection from "@/components/SupportSection";
 import { authApi } from "@/apis/Authentication/auth";
 
 export default function HomeView() {
@@ -42,6 +43,7 @@ export default function HomeView() {
       <AboutSummarySection />
       <ProblemSection />
       <InteractiveSteps />
+      <SupportSection />
 
       {!isOwner && <TrendingHomesSection user={user} loading={loading} />}
 
